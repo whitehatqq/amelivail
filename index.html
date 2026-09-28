@@ -192,7 +192,9 @@
   .a3-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 10%; }
   .a3-photo figcaption { position: absolute; left: 14px; bottom: 14px; padding: 6px 12px; border-radius: 99px; background: rgba(20,17,23,.72); color: #fff; font-size: .8rem; font-weight: 700; }
   .a3-bio { grid-area: bio; }
-  .a3-bio h3 { font-family: var(--display); font-size: 1.4rem; line-height: 1.25; margin-bottom: .8rem; }
+  .a3-bio h3 { font-family: var(--display); font-weight: 800; font-size: clamp(1.5rem, 2.6vw, 2.2rem); line-height: 1.15; letter-spacing: -.01em; margin-bottom: 1rem; text-wrap: balance; }
+  .a3-bio h3 em { font-style: normal; color: var(--accent); }
+  .a3-bio p { font-size: .95rem; }
   .a3-bio p { color: #3d3845; }
   .a3-num { grid-area: num; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; background: var(--grad); color: #fff; border: 0; }
   .a3-num.alt { grid-area: num2; background: var(--ink); color: #fff; }
@@ -404,8 +406,8 @@
     <div class="a3">
       <figure class="a3-photo"><img src="assets/img/hero.jpg" alt="Ameli Vail"><figcaption>Ameli Vail</figcaption></figure>
       <div class="a3-bio">
-        <h3>Ameli Vail пишет песни о том, что не может сказать вслух</h3>
-        <p>Инди-поп на стыке уличной эстетики и нежной лирики: каждый релиз — отдельная история со своим визуалом, от холодного неона «Звонит и молчит» до тёплого света «Сердце задышит».</p>
+        <h3>Я не говорю о том, что чувствую. <em>Я пишу песни.</em></h3>
+        <p>Ameli Vail — автор-исполнитель. Сама пишет свои песни: инди-поп о том, что обычно остаётся внутри. С 2024 года вышло <span data-count>14</span> синглов — от «Песен о любви» до «Все на ноль».</p>
       </div>
       <div class="a3-num"><b data-count>12</b><span>синглов на всех площадках</span></div>
       <div class="a3-num alt"><b>16+</b><span>возрастная маркировка</span></div>
