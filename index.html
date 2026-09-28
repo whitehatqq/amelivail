@@ -319,6 +319,80 @@
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .reveal { opacity: 1; transform: none; }
   }
+
+  /* ======================= ВЫБРАННЫЕ БЛОКИ (1B, 2A, 3B, 4B, 5C) ======================= */
+  .reveal { opacity: 1; transform: none; }
+  .track .mini i { width: var(--p, 0%); }
+  [data-play] .i-pause { display: none; }
+  [data-play].is-playing .i-pause { display: block; }
+  [data-play].is-playing .i-play { display: none; }
+
+  /* ---------- HERO: журнальная обложка (вариант 1B) ---------- */
+  .nav:not(.scrolled) .logo, .nav:not(.scrolled) .burger { color: #141217; border-color: rgba(0,0,0,.15); }
+  .nav:not(.scrolled) .age { color: #6b6573; border-color: rgba(0,0,0,.15); }
+  @media (min-width: 721px) { .nav:not(.scrolled) .nav-links a { color: #4a4552; } .nav:not(.scrolled) .nav-links a:hover { color: #141217; } }
+  .h2 { background: #ebe7e2; color: #141217; padding: 110px 0 64px; overflow: hidden; }
+  .h2-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #6b6573; border-bottom: 1px solid rgba(0,0,0,.15); padding-bottom: 12px; }
+  .h2-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 10.6vw; line-height: .85; letter-spacing: -.045em; text-align: center; white-space: nowrap; margin: 2.2rem 0 0; position: relative; z-index: 2; pointer-events: none; }
+  .h2-stage { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: clamp(20px, 4vw, 56px); align-items: end; margin-top: -3.4vw; position: relative; z-index: 1; }
+  .h2-photo { width: min(400px, 70vw); aspect-ratio: 3/4; overflow: hidden; border-radius: 6px; box-shadow: 0 40px 80px -30px rgba(40,20,30,.45); max-width: 100%; }
+  .h2-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; }
+  .h2-side p { font-size: 1.05rem; max-width: 300px; color: #3d3845; }
+  .h2-side a.more { display: inline-block; margin-top: 1rem; font-weight: 700; color: #141217; text-decoration: none; border-bottom: 2px solid #d4263f; }
+  .h2-side.r { justify-self: end; text-align: right; }
+  .h2-side small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #d4263f; }
+  .h2-side strong { display: block; font-family: var(--display); font-size: clamp(1.3rem, 2.4vw, 2rem); line-height: 1.1; margin: .4rem 0 1rem; }
+  .h2-play { display: inline-flex; align-items: center; gap: .6rem; padding: .9rem 1.4rem; border-radius: 99px; background: #141217; color: #fff; font-weight: 700; font-size: .9rem; }
+  .h2-play svg { width: 16px; height: 16px; }
+  .h2-play:hover { background: #d4263f; }
+  .h2-side .full { display: block; margin-top: .8rem; font-size: .82rem; color: #6b6573; text-decoration: none; }
+
+  /* ---------- ABOUT B: манифест ---------- */
+  .a2 { text-align: center; }
+  .a2-text { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4.2vw, 3.5rem); line-height: 1.18; max-width: 1100px; margin: 1.6rem auto 2.4rem; text-wrap: balance; }
+  .a2-text .pic { display: inline-block; height: .95em; width: 2em; border-radius: 99px; object-fit: cover; vertical-align: -.12em; margin: 0 .1em; }
+  .a2-text .hl { color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; }
+  .a2-facts { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .a2-facts span { padding: 10px 18px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--muted); font-size: .9rem; }
+  .a2-facts b { color: var(--text); }
+
+  /* ---------- PHOTOS B: лента ---------- */
+  .p2-strip { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 10px; scrollbar-width: none; padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); scroll-padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); }
+  .p2-strip::-webkit-scrollbar { display: none; }
+  .p2-strip figure { flex: 0 0 clamp(230px, 27vw, 360px); scroll-snap-align: start; }
+  .p2-strip img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; cursor: zoom-in; }
+  .p2-strip figcaption { display: flex; justify-content: space-between; margin-top: 10px; font-size: .85rem; color: var(--muted); }
+  .p2-strip figcaption b { color: var(--text); }
+  .p2-arrows { display: flex; gap: 8px; }
+
+  /* ---------- CONTACTS C: ссылки в профиле ---------- */
+  .c3 { background: radial-gradient(50% 60% at 50% 30%, rgba(214,38,63,.2), transparent 70%), radial-gradient(40% 40% at 80% 90%, rgba(143,123,255,.2), transparent 70%), var(--bg); }
+  .c3-card { max-width: 440px; margin: 0 auto; text-align: center; padding: clamp(24px, 4vw, 36px); border-radius: 32px; background: rgba(255,255,255,.04); border: 1px solid var(--line); backdrop-filter: blur(20px); }
+  .c3-ava { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; object-position: 50% 12%; margin: 0 auto 1rem; border: 3px solid transparent; background: var(--grad) border-box; }
+  .c3-card h3 { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; }
+  .c3-card > p { color: var(--muted); font-size: .9rem; margin-bottom: 1.6rem; }
+  .c3-links { display: grid; gap: 10px; }
+  .c3-btn { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: var(--card-hover); border: 1px solid var(--line); text-decoration: none; font-weight: 700; transition: transform .2s, background .2s; }
+  .c3-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.1); }
+  .c3-btn svg { width: 20px; height: 20px; flex: none; }
+  .c3-btn span { flex: 1; text-align: left; }
+  .c3-btn small { color: var(--muted); font-weight: 500; }
+  .c3-btn.main { background: var(--grad); color: #0b0a0f; border: 0; }
+  .c3-mail { display: flex; align-items: center; gap: 8px; margin-top: 16px; padding: 6px 6px 6px 16px; border-radius: 99px; border: 1px dashed rgba(255,255,255,.25); }
+  .c3-mail span { flex: 1; min-width: 0; text-align: left; font-weight: 600; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; user-select: all; }
+  .c3-mail button { padding: 8px 14px; border-radius: 99px; background: var(--text); color: var(--bg); font-weight: 700; font-size: .8rem; }
+  .c3-note { margin-top: 1rem; font-size: .72rem; color: var(--dim); }
+
+  @media (max-width: 960px) {
+  }
+  @media (max-width: 720px) {
+    .h2-top span:last-child { display: none; }
+    .h2-stage { grid-template-columns: 1fr; justify-items: center; text-align: center; margin-top: 18px; }
+    .h2-side.r { justify-self: center; text-align: center; }
+    .h2-side p { margin: 0 auto; }
+    .h2-side.l { order: 2; }
+    .h2-photo { width: min(320px, 82vw); }
+  }
 </style>
 </head>
 <body>
@@ -330,9 +404,9 @@
     <nav aria-label="Основное меню">
       <ul class="nav-links" id="navLinks">
         <li><a href="#music">Музыка</a></li>
-        <li><a href="#about">Об артистке</a></li>
-        <li><a href="#photos">Фото</a></li>
-        <li><a href="#contacts">Контакты</a></li>
+        <li><a href="#about-a">Об артистке</a></li>
+        <li><a href="#photos-a">Фото</a></li>
+        <li><a href="#contacts-a">Контакты</a></li>
       </ul>
     </nav>
     <div style="display:flex;align-items:center;gap:10px">
@@ -346,37 +420,32 @@
 
 <main id="top">
 
-<!-- ================= HERO ================= -->
-<section class="hero" style="padding:0">
-  <div class="hero-photo">
-    <img src="assets/img/hero.jpg" alt="Ameli Vail — портрет" fetchpriority="high">
-  </div>
-  <div class="hero-glow"></div>
-  <div class="wrap hero-content">
-    <span class="eyebrow">Инди-поп · Россия</span>
-    <h1 class="hero-name">Ameli<span class="outline">Vail</span></h1>
-    <p class="hero-desc">Искренние тексты, атмосферный звук и живые эмоции. Нажми play — и послушай отрывок нового сингла прямо здесь.</p>
 
-    <div class="single-card" data-track-card="0">
-      <img src="assets/img/release-06.webp" alt="Обложка сингла «Сердце задышит»">
-      <div class="single-meta">
+<!-- ================= ГЛАВНЫЙ ЭКРАН ================= -->
+<section class="h2" id="hero">
+  <div class="wrap">
+    <div class="h2-top"><span>Инди-поп · Россия</span><span>Официальный сайт</span></div>
+    <h1 class="h2-name">Ameli Vail</h1>
+    <div class="h2-stage">
+      <div class="h2-side l">
+        <p>Искренние тексты, атмосферный звук и живые эмоции. Песни о том, что обычно не говорят вслух.</p>
+        <a class="more" href="#music">Вся музыка ↓</a>
+      </div>
+      <figure class="h2-photo"><img src="assets/img/hero.jpg" alt="Ameli Vail — портрет"></figure>
+      <div class="h2-side r">
         <small>Новый сингл</small>
         <strong>Сердце задышит</strong>
-        <a href="https://band.link/amelivailserdtse" target="_blank" rel="noopener">Слушать полностью на площадках ↗</a>
+        <button class="h2-play" data-play="0">
+          <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+          Отрывок 0:30
+        </button>
+        <a class="full" href="https://band.link/amelivailserdtse" target="_blank" rel="noopener">Слушать полностью ↗</a>
       </div>
-      <button class="play-btn" data-play="0" aria-label="Слушать отрывок «Сердце задышит»">
-        <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
-        <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
-      </button>
     </div>
   </div>
-  <a class="scroll-hint" href="#music">Листай вниз</a>
 </section>
-
-<!-- бегущая строка с названиями треков (заполняется из JS) -->
-<div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
-
-<!-- ================= MUSIC ================= -->
+<!-- ================= МУЗЫКА ================= -->
 <section id="music">
   <div class="wrap">
     <div class="sec-head reveal">
@@ -423,109 +492,66 @@
   </div>
 </section>
 
-<!-- ================= ABOUT ================= -->
-<section id="about" style="background:var(--bg2)">
-  <div class="wrap about-grid">
-    <div class="about-photo reveal">
-      <img src="assets/img/release-06.webp" alt="Ameli Vail" loading="lazy" style="transform:scale(1.32);transform-origin:50% 100%">
-      <span class="tag">📍 Россия</span>
-    </div>
-    <div class="about-text reveal">
-      <span class="eyebrow">Об артистке</span>
-      <h2 class="sec-title" style="margin-bottom:1.6rem">Ameli Vail</h2>
-      <!-- ЗАГЛУШКА: заменить на настоящую биографию -->
-      <p class="lead">Песни о том, что обычно не говорят вслух: про одиночество в большом городе, первую зиму после расставания и умение идти дальше самой.</p>
-      <p>Ameli Vail пишет инди-поп на стыке уличной эстетики и нежной лирики. Её треки — это ночные прогулки по набережным, январский снег и честные разговоры с собой.</p>
-      <p>Каждый релиз — отдельная история со своим визуалом: от холодного неона «Звонит и молчит» до тёплого света «Сердце задышит».</p>
-      <div class="facts">
-        <div class="fact"><b id="factCount">12</b><span>синглов</span></div>
-        <div class="fact"><b>16+</b><span>возраст. маркировка</span></div>
-        <div class="fact"><b>RU</b><span>на русском языке</span></div>
-      </div>
+
+<!-- ================= ОБ АРТИСТКЕ ================= -->
+<section id="about" class="a2">
+  <div class="wrap">
+    <span class="eyebrow">Об артистке</span>
+    <p class="a2-text">
+      <span class="hl">Ameli Vail</span> <img class="pic" src="assets/img/hero.jpg" alt="" style="object-position:50% 15%"> пишет песни о том, что обычно не говорят вслух <img class="pic" src="assets/img/release-05.webp" alt=""> — про январский снег, ночные набережные <img class="pic" src="assets/img/release-01.webp" alt=""> и умение идти <span class="hl">дальше самой.</span>
+    </p>
+    <div class="a2-facts">
+      <span><b data-count>12</b> синглов</span>
+      <span><b>Инди-поп</b></span>
+      <span>на <b>русском</b></span>
+      <span><b>16+</b></span>
     </div>
   </div>
 </section>
 
-<!-- ================= PHOTOS ================= -->
+<!-- ================= ФОТО ================= -->
 <section id="photos">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <span class="eyebrow">Галерея</span>
-        <h2 class="sec-title">Фото</h2>
+    <div class="sec-head">
+      <div><span class="eyebrow">Галерея</span><h2 class="sec-title">Фото</h2></div>
+      <div class="p2-arrows">
+        <button class="icon-btn" data-scroll="-1" aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="icon-btn" data-scroll="1" aria-label="Вперёд"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
-      <p class="sec-note">Нажми на фото, чтобы открыть крупнее.</p>
     </div>
-    <div class="gallery reveal" id="gallery">
-      <button aria-label="Открыть фото"><img src="assets/img/release-05.webp" alt="Ameli Vail — «Подруга января»" loading="lazy"></button>
-      <button aria-label="Открыть фото"><img src="assets/img/release-02.webp" alt="Ameli Vail — «Звонит и молчит»" loading="lazy"></button>
-      <button aria-label="Открыть фото"><img src="assets/img/release-01.webp" alt="Ameli Vail — «Дальше я сама»" loading="lazy"></button>
-      <button aria-label="Открыть фото"><img src="assets/img/release-03.webp" alt="Ameli Vail — «Дожди»" loading="lazy"></button>
-      <button aria-label="Открыть фото"><img src="assets/img/release-04.webp" alt="Ameli Vail" loading="lazy"></button>
-    </div>
+  </div>
+  <div class="p2-strip" id="p2" data-lb>
+    <figure><img src="assets/img/hero.jpg" alt="Ameli Vail" loading="lazy" style="object-position:50% 10%"><figcaption><b>Портрет</b><span>01</span></figcaption></figure>
+    <figure><img src="assets/img/release-05.webp" alt="Подруга января" loading="lazy"><figcaption><b>Подруга января</b><span>02</span></figcaption></figure>
+    <figure><img src="assets/img/release-02.webp" alt="Звонит и молчит" loading="lazy"><figcaption><b>Звонит и молчит</b><span>03</span></figcaption></figure>
+    <figure><img src="assets/img/release-04.webp" alt="Ameli Vail" loading="lazy"><figcaption><b>Сибирь</b><span>04</span></figcaption></figure>
+    <figure><img src="assets/img/release-01.webp" alt="Дальше я сама" loading="lazy"><figcaption><b>Дальше я сама</b><span>05</span></figcaption></figure>
+    <figure><img src="assets/img/release-03.webp" alt="Дожди" loading="lazy"><figcaption><b>Дожди</b><span>06</span></figcaption></figure>
+    <figure><img src="assets/img/release-06.webp" alt="Сердце задышит" loading="lazy"><figcaption><b>Сердце задышит</b><span>07</span></figcaption></figure>
   </div>
 </section>
 
-<!-- ================= CONTACTS ================= -->
-<section id="contacts" style="padding-top:0">
+<!-- ================= КОНТАКТЫ ================= -->
+<section id="contacts" class="c3">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <div>
-        <span class="eyebrow">Связь</span>
-        <h2 class="sec-title">Контакты</h2>
+    <div class="c3-card">
+      <img class="c3-ava" src="assets/img/hero.jpg" alt="Ameli Vail">
+      <h3>Ameli Vail</h3>
+      <p>Инди-поп · Россия · 16+</p>
+      <div class="c3-links">
+        <a class="c3-btn main" href="https://band.link/amelivailserdtse" target="_blank" rel="noopener"><i data-icon="play"></i><span>Новый сингл «Сердце задышит»</span>↗</a>
+        <a class="c3-btn" href="https://t.me/AMELIVAIL" target="_blank" rel="noopener"><i data-icon="tg"></i><span>Telegram</span><small>@AMELIVAIL</small></a>
+        <a class="c3-btn" href="https://vk.ru/aamelivail" target="_blank" rel="noopener"><i data-icon="vk"></i><span>ВКонтакте</span><small>aamelivail</small></a>
+        <a class="c3-btn" href="https://youtube.com/@amelivail" target="_blank" rel="noopener"><i data-icon="yt"></i><span>YouTube</span><small>@amelivail</small></a>
+        <a class="c3-btn" href="https://www.tiktok.com/@amelivail" target="_blank" rel="noopener"><i data-icon="tt"></i><span>TikTok</span><small>@amelivail</small></a>
+        <a class="c3-btn" href="https://www.instagram.com/amelivail" target="_blank" rel="noopener"><i data-icon="ig"></i><span>Instagram*</span><small>@amelivail</small></a>
       </div>
-    </div>
-    <div class="contact-grid">
-      <div class="booking reveal">
-        <span class="eyebrow">Букинг и сотрудничество</span>
-        <h3>Концерты, коллабы, пресса</h3>
-        <p>Выступления, фиты, интервью и интеграции — пишите на почту, ответим в течение пары дней.</p>
-        <!-- ЗАГЛУШКА: заменить на реальную почту -->
-        <a class="mail" href="mailto:booking@example.com">booking@example.com</a>
-      </div>
-      <div class="socials reveal">
-        <a class="social" href="https://t.me/AMELIVAIL" target="_blank" rel="noopener">
-          <div class="top">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </div>
-          <div><b>Telegram</b><small>@AMELIVAIL</small></div>
-        </a>
-        <a class="social" href="https://vk.ru/aamelivail" target="_blank" rel="noopener">
-          <div class="top">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.032-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.491-.085.745-.576.745z"/></svg>
-            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </div>
-          <div><b>ВКонтакте</b><small>vk.ru/aamelivail</small></div>
-        </a>
-        <a class="social" href="https://youtube.com/@amelivail" target="_blank" rel="noopener">
-          <div class="top">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </div>
-          <div><b>YouTube</b><small>@amelivail</small></div>
-        </a>
-        <a class="social" href="https://www.tiktok.com/@amelivail" target="_blank" rel="noopener">
-          <div class="top">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </div>
-          <div><b>TikTok</b><small>@amelivail</small></div>
-        </a>
-        <a class="social" href="https://www.instagram.com/amelivail" target="_blank" rel="noopener" style="grid-column:1/-1">
-          <div class="top">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
-          </div>
-          <div><b>Instagram<sup>*</sup></b><small>@amelivail · *см. примечание внизу страницы</small></div>
-        </a>
-      </div>
+      <div class="c3-mail"><span id="c3mail">booking@example.com</span><button id="c3copy">Копировать</button></div>
+      <p class="c3-note">Букинг, коллабы и пресса — пишите на почту.</p>
     </div>
   </div>
 </section>
-
 </main>
-
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
@@ -566,14 +592,12 @@
 /* =====================================================================
    ТРЕКИ — редактировать здесь.
    title   — название
-   cover   — путь к обложке (или null → будет красивая градиентная заглушка)
-   link    — ссылка «Слушать полностью» (band.link / Яндекс Музыка / VK и т.п.)
-   preview — путь к файлу-отрывку, например 'assets/audio/serdtse.mp3'.
-             Пока null → играет СИНТЕЗИРОВАННОЕ ДЕМО (не настоящая песня),
-             чтобы можно было проверить работу плеера.
-   start   — с какой секунды файла начинать отрывок (например, с припева).
-             Если файл уже нарезан на 30 сек — оставьте 0.
-   year    — год релиза (пока не указан).
+   cover   — путь к обложке (или null → градиентная заглушка)
+   link    — ссылка «Слушать полностью» (band.link и т.п.)
+   preview — файл-отрывок, например 'assets/audio/serdtse.mp3'.
+             Пока null → играет СИНТЕЗИРОВАННОЕ ДЕМО (не настоящая песня).
+   start   — с какой секунды файла начинать отрывок (например, с припева)
+   year    — год релиза (пока не указан)
    ===================================================================== */
 const PREVIEW_SECONDS = 30;
 const tracks = [
@@ -591,8 +615,8 @@ const tracks = [
   { title: 'Пыль в глаза оружие', cover: null, link: 'https://band.link/X2gzA',             preview: null, start: 0, year: '', hue: 150 },
 ];
 
-/* ---------- helpers ---------- */
 const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 const fmt = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 function seeded(seed) { let x = 0; for (const c of seed) x = (x * 31 + c.charCodeAt(0)) >>> 0; return () => ((x = (x * 1664525 + 1013904223) >>> 0) / 4294967296); }
@@ -601,25 +625,18 @@ function coverHTML(t, cls = '') {
   const h = t.hue;
   return `<div class="ph ${cls}" style="background:radial-gradient(120% 90% at 20% 10%,hsl(${h} 80% 62%),transparent 60%),radial-gradient(100% 100% at 90% 100%,hsl(${(h + 60) % 360} 70% 45%),transparent 60%),#15131c">${esc(t.title)}</div>`;
 }
+const ICON_PLAY = '<svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>';
+const ICON_PAUSE = '<svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
 
-/* ---------- marquee ---------- */
-{
-  const names = tracks.map(t => `<span>${esc(t.title)}</span>`).join('');
-  $('#marquee').innerHTML = names + names;
-  $('#factCount').textContent = tracks.length;
-}
+/* ---------- общие мелочи ---------- */
+{ const names = tracks.map(t => `<span>${esc(t.title)}</span>`).join(''); const m = $('#marquee'); if (m) m.innerHTML = names + names; }
+$$('#factCount, [data-count]').forEach(el => el.textContent = tracks.length);
 
-/* ---------- track list ---------- */
-const list = $('#tracks');
-list.innerHTML = tracks.map((t, i) => `
-  <li class="track" data-i="${i}" tabindex="0" aria-label="Отрывок: ${esc(t.title)}">
+/* ---------- МУЗЫКА A: список ---------- */
+$('#tracks').innerHTML = tracks.map((t, i) => `
+  <li class="track" data-i="${i}" data-ti="${i}" data-play="${i}" tabindex="0" aria-label="Отрывок: ${esc(t.title)}">
     <span class="num">${String(i + 1).padStart(2, '0')}</span>
-    <div class="cov">${coverHTML(t)}
-      <div class="ov">
-        <svg class="i-play" viewBox="0 0 24 24" fill="#fff"><path d="M7 4.5v15l13-7.5z"/></svg>
-        <svg class="i-pause" viewBox="0 0 24 24" fill="#fff"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
-      </div>
-    </div>
+    <div class="cov">${coverHTML(t)}<div class="ov">${ICON_PLAY.replace('currentColor', '#fff')}${ICON_PAUSE.replace('currentColor', '#fff')}</div></div>
     <div class="ttl"><b>${esc(t.title)}</b><span>Ameli Vail · Сингл${t.year ? ' · ' + t.year : ''}</span><div class="mini"><i></i></div></div>
     <span class="dur">0:${PREVIEW_SECONDS}</span>
     <a class="ext" href="${t.link}" target="_blank" rel="noopener" aria-label="Слушать «${esc(t.title)}» полностью" title="Слушать полностью">
@@ -627,44 +644,27 @@ list.innerHTML = tracks.map((t, i) => `
     </a>
   </li>`).join('');
 
-list.addEventListener('click', e => {
-  if (e.target.closest('.ext')) return;
-  const li = e.target.closest('.track'); if (li) toggle(+li.dataset.i);
-});
-list.addEventListener('keydown', e => {
-  const li = e.target.closest('.track');
-  if (li && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(+li.dataset.i); }
-});
-
-/* ---------- waveform ---------- */
+/* ---------- волна для плеера A ---------- */
 function drawWave(t) {
   const rnd = seeded(t.title), n = 64, bars = [];
-  for (let i = 0; i < n; i++) {
-    const env = Math.sin(Math.PI * (i + .5) / n) * .5 + .5;
-    bars.push(`<i style="height:${Math.round((.18 + rnd() * .82) * env * 100)}%"></i>`);
-  }
-  document.querySelectorAll('#wave .wave-layer').forEach(l => l.innerHTML = bars.join(''));
+  for (let i = 0; i < n; i++) { const env = Math.sin(Math.PI * (i + .5) / n) * .5 + .5; bars.push(`<i style="height:${Math.round((.18 + rnd() * .82) * env * 100)}%"></i>`); }
+  $$('#wave .wave-layer').forEach(l => l.innerHTML = bars.join(''));
 }
 
-/* =====================================================================
-   ДЕМО-ЗВУК. Пока нет настоящих отрывков, для каждого трека синтезируется
-   уникальная 30-секундная инструментальная петля (аккорды + бас + ритм).
-   Как только в tracks[i].preview указан файл — играет файл, а не демо.
-   ===================================================================== */
+/* ---------- ДЕМО-ЗВУК (заглушка вместо настоящих отрывков) ---------- */
 const demoCache = new Map();
 async function renderDemo(t) {
   if (demoCache.has(t.title)) return demoCache.get(t.title);
   const sr = 22050, len = PREVIEW_SECONDS, ctx = new OfflineAudioContext(2, sr * len, sr);
   const rnd = seeded(t.title + 'demo');
   const bpm = 84 + Math.floor(rnd() * 36), beat = 60 / bpm, bar = beat * 4;
-  const root = 45 + Math.floor(rnd() * 7);                     // MIDI-нота тоники (A2..D#3)
+  const root = 45 + Math.floor(rnd() * 7);
   const progs = [[0, 8, 3, 10], [0, 5, 8, 7], [0, 10, 8, 3], [0, 3, 8, 10]];
   const prog = progs[Math.floor(rnd() * progs.length)];
   const hz = m => 440 * Math.pow(2, (m - 69) / 12);
   const master = ctx.createGain(); master.gain.value = .55;
   const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400;
   master.connect(lp).connect(ctx.destination);
-  // простой «ревер» через задержки
   const dl = ctx.createDelay(1); dl.delayTime.value = beat * .75; const fb = ctx.createGain(); fb.gain.value = .32;
   dl.connect(fb).connect(dl); dl.connect(master);
   const note = (f, t0, dur, type, vol, dest = master) => {
@@ -688,11 +688,9 @@ async function renderDemo(t) {
   const drumsFrom = bar * 2;
   for (let b = 0, tt = 0; tt < len; b++, tt = b * bar) {
     const r = root + prog[b % 4], minor = [0, 3, 7, 10, 14];
-    minor.slice(0, 4).forEach(iv => note(hz(r + 12 + iv), tt, bar, 'triangle', .07));           // пэд
-    note(hz(r - 12), tt, beat * 1.5, 'sine', .35, master); note(hz(r - 12), tt + beat * 2.5, beat * 1.4, 'sine', .3, master); // бас
-    for (let s = 0; s < 8; s++) {                                                                  // арпеджио
-      if (rnd() > .35) note(hz(r + 24 + minor[Math.floor(rnd() * 5)]), tt + s * beat / 2, beat / 2, 'sine', .05);
-    }
+    minor.slice(0, 4).forEach(iv => note(hz(r + 12 + iv), tt, bar, 'triangle', .07));
+    note(hz(r - 12), tt, beat * 1.5, 'sine', .35); note(hz(r - 12), tt + beat * 2.5, beat * 1.4, 'sine', .3);
+    for (let s = 0; s < 8; s++) if (rnd() > .35) note(hz(r + 24 + minor[Math.floor(rnd() * 5)]), tt + s * beat / 2, beat / 2, 'sine', .05);
     if (tt >= drumsFrom) for (let k = 0; k < 4; k++) { if (k % 2 === 0) kick(tt + k * beat); hat(tt + k * beat + beat / 2); }
   }
   const buf = await ctx.startRendering();
@@ -713,13 +711,10 @@ function toWav(buf) {
   return new Blob([ab], { type: 'audio/wav' });
 }
 
-/* =====================================================================
-   ПЛЕЕР: один <audio> на всю страницу, отрывок ограничен 30 секундами,
-   плавное появление/затухание громкости, одновременно играет только один трек.
-   ===================================================================== */
+/* ---------- ПЛЕЕР: один звук на всю страницу, все варианты синхронно ---------- */
 const audio = new Audio();
 audio.preload = 'none';
-let cur = 0, playing = false, fadeTimer = null;
+let cur = 0, playing = false, fadeTimer = null, fadingOut = false;
 
 function setTrack(i) {
   cur = (i + tracks.length) % tracks.length;
@@ -734,10 +729,10 @@ function setTrack(i) {
   $('#dCover').innerHTML = coverHTML(t);
   $('#dTitle').textContent = t.title;
   drawWave(t);
-  document.querySelectorAll('.track').forEach(li => li.classList.toggle('active', +li.dataset.i === cur));
+  $$('[data-ti]').forEach(el => el.style.setProperty('--p', '0%'));
+  syncUI();
   updateProgress(0);
 }
-
 function fadeTo(target, ms, done) {
   clearInterval(fadeTimer);
   const from = audio.volume, steps = Math.max(1, ms / 30); let k = 0;
@@ -746,7 +741,6 @@ function fadeTo(target, ms, done) {
     if (k >= steps) { clearInterval(fadeTimer); done && done(); }
   }, 30);
 }
-
 async function play(i) {
   if (i !== undefined && i !== cur) { stop(true); setTrack(i); }
   const t = tracks[cur];
@@ -754,7 +748,7 @@ async function play(i) {
   try {
     const src = t.preview || await renderDemo(t);
     if (audio.dataset.src !== src) { audio.src = src; audio.dataset.src = src; audio.currentTime = t.start; }
-    audio.volume = 0;
+    audio.volume = 0; fadingOut = false;
     await audio.play();
     fadeTo(1, 600);
     playing = true;
@@ -766,41 +760,37 @@ async function play(i) {
 function pause() { fadeTo(0, 250, () => audio.pause()); playing = false; syncUI(); }
 function stop(silent) {
   clearInterval(fadeTimer); audio.pause(); playing = false;
-  const t = tracks[cur]; if (audio.dataset.src) audio.currentTime = t.start;
+  if (audio.dataset.src) audio.currentTime = tracks[cur].start;
   updateProgress(0); if (!silent) syncUI();
 }
 function toggle(i) { (i === undefined || i === cur) && playing ? pause() : play(i === undefined ? cur : i); }
-
 function elapsed() { return Math.max(0, audio.currentTime - tracks[cur].start); }
 audio.addEventListener('timeupdate', () => {
   const e = elapsed();
-  if (playing && e >= PREVIEW_SECONDS - 1.2 && !fadeTimer_isFadingOut) { fadeTimer_isFadingOut = true; fadeTo(0, 1100); }
-  if (e >= PREVIEW_SECONDS) { fadeTimer_isFadingOut = false; stop(); next(true); return; }
+  if (playing && e >= PREVIEW_SECONDS - 1.2 && !fadingOut) { fadingOut = true; fadeTo(0, 1100); }
+  if (e >= PREVIEW_SECONDS) { stop(); next(true); return; }
   updateProgress(e);
 });
-let fadeTimer_isFadingOut = false;
-audio.addEventListener('play', () => fadeTimer_isFadingOut = false);
 audio.addEventListener('ended', () => { stop(); next(true); });
-
 function next(auto) { const n = cur + 1; if (auto && n >= tracks.length) { setTrack(0); return; } play(n % tracks.length); }
 function prev() { play((cur - 1 + tracks.length) % tracks.length); }
 
 function updateProgress(e) {
-  const p = Math.min(100, e / PREVIEW_SECONDS * 100);
-  $('#wave').style.setProperty('--p', p + '%');
+  const p = Math.min(100, e / PREVIEW_SECONDS * 100) + '%';
+  $('#wave').style.setProperty('--p', p);
   $('#wave').setAttribute('aria-valuenow', Math.floor(e));
   $('#tCur').textContent = fmt(e);
   $('#dTime').textContent = `${fmt(e)} / ${fmt(PREVIEW_SECONDS)} · отрывок`;
-  $('#dBar').style.width = p + '%';
-  const mini = document.querySelector('.track.active .mini i'); if (mini) mini.style.width = p + '%';
+  $('#dBar').style.width = p;
+  $$(`[data-ti="${cur}"]`).forEach(el => el.style.setProperty('--p', p));
 }
-function setLoading(on) { document.querySelectorAll(`#pPlay, #dPlay, [data-play="${cur}"]`).forEach(b => b.classList.toggle('is-loading', on)); }
+function setLoading(on) { $$(`#pPlay, #dPlay, [data-play="${cur}"]`).forEach(b => b.classList.toggle('is-loading', on)); }
 function syncUI() {
   $('#player').classList.toggle('is-playing', playing);
   $('#pPlay').classList.toggle('is-playing', playing);
   $('#dPlay').classList.toggle('is-playing', playing);
-  document.querySelectorAll('[data-play]').forEach(b => b.classList.toggle('is-playing', playing && +b.dataset.play === cur));
-  document.querySelectorAll('.track').forEach(li => li.classList.toggle('is-playing', playing && +li.dataset.i === cur));
+  $$('[data-ti]').forEach(el => { const on = +el.dataset.ti === cur; el.classList.toggle('active', on); el.classList.toggle('is-playing', on && playing); });
+  $$('[data-play]').forEach(el => el.classList.toggle('is-playing', playing && +el.dataset.play === cur));
   if ('mediaSession' in navigator) {
     const t = tracks[cur];
     navigator.mediaSession.metadata = new MediaMetadata({ title: t.title + ' (отрывок)', artist: 'Ameli Vail', artwork: t.cover ? [{ src: t.cover, sizes: '512x512' }] : [] });
@@ -808,7 +798,16 @@ function syncUI() {
   }
 }
 
-/* seek по волне — только внутри 30-секундного отрывка */
+/* любой элемент с data-play запускает свой трек */
+document.addEventListener('click', e => {
+  if (e.target.closest('a')) return;
+  const el = e.target.closest('[data-play]'); if (el) toggle(+el.dataset.play);
+});
+document.addEventListener('keydown', e => {
+  const el = e.target.closest && e.target.closest('li[data-play]');
+  if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(+el.dataset.play); }
+});
+
 function seekFromEvent(ev) {
   if (!audio.dataset.src) return;
   const r = $('#wave').getBoundingClientRect();
@@ -816,45 +815,57 @@ function seekFromEvent(ev) {
   audio.currentTime = tracks[cur].start + x * (PREVIEW_SECONDS - 1.5);
   updateProgress(elapsed());
 }
-$('#wave').addEventListener('click', e => { if (!audio.dataset.src) { play().then(() => seekFromEvent(e)); } else seekFromEvent(e); });
-$('#wave').addEventListener('keydown', e => {
-  if (!audio.dataset.src) return;
-  const d = e.key === 'ArrowRight' ? 5 : e.key === 'ArrowLeft' ? -5 : 0;
-  if (d) { e.preventDefault(); audio.currentTime = tracks[cur].start + Math.min(PREVIEW_SECONDS - 1.5, Math.max(0, elapsed() + d)); }
-});
-
+$('#wave').addEventListener('click', e => { if (!audio.dataset.src) play().then(() => seekFromEvent(e)); else seekFromEvent(e); });
 $('#pPlay').onclick = () => toggle();
 $('#dPlay').onclick = () => toggle();
 $('#pNext').onclick = $('#dNext').onclick = () => play(cur + 1);
 $('#pPrev').onclick = prev;
 $('#dClose').onclick = () => { stop(); $('#dock').classList.remove('show'); };
-document.querySelectorAll('[data-play]').forEach(b => b.onclick = () => toggle(+b.dataset.play));
 if ('mediaSession' in navigator) {
   navigator.mediaSession.setActionHandler('play', () => play());
   navigator.mediaSession.setActionHandler('pause', pause);
   navigator.mediaSession.setActionHandler('nexttrack', () => play(cur + 1));
   navigator.mediaSession.setActionHandler('previoustrack', prev);
 }
-/* защита от «Сохранить аудио как…» по правому клику на плеерах */
 ['#player', '#dock', '#tracks'].forEach(s => $(s).addEventListener('contextmenu', e => e.preventDefault()));
-
 setTrack(0);
-/* мини-плеер прячется, пока большой плеер виден на экране */
 new IntersectionObserver(([e]) => $('#dock').classList.toggle('hidden-by-player', e.isIntersecting), { threshold: .35 }).observe($('#player'));
 
-/* ---------- nav / burger / reveal / lightbox ---------- */
+/* ---------- иконки соцсетей для блока контактов ---------- */
+const ICONS = {
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>',
+  tg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>',
+  vk: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.032-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.491-.085.745-.576.745z"/></svg>',
+  yt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
+  tt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>',
+  ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
+};
+$$('[data-icon]').forEach(el => el.outerHTML = ICONS[el.dataset.icon] || '');
+
+$('#c3copy').onclick = async () => {
+  const text = $('#c3mail').textContent;
+  try { await navigator.clipboard.writeText(text); $('#c3copy').textContent = 'Скопировано'; }
+  catch { const r = document.createRange(); r.selectNodeContents($('#c3mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $('#c3copy').textContent = 'Выделено — Ctrl+C'; }
+  setTimeout(() => $('#c3copy').textContent = 'Копировать', 2200);
+};
+
+/* ---------- фото: лента, стрелки ---------- */
+$$('[data-scroll]').forEach(b => b.onclick = () => { const s = $('#p2'); s.scrollBy({ left: +b.dataset.scroll * s.clientWidth * .8, behavior: 'smooth' }); });
+
+/* ---------- nav / burger / lightbox ---------- */
 const nav = $('#nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30), { passive: true });
 $('#burger').onclick = () => { const o = $('#navLinks').classList.toggle('open'); $('#burger').setAttribute('aria-expanded', o); };
-document.querySelectorAll('.nav-links a').forEach(a => a.onclick = () => $('#navLinks').classList.remove('open'));
-
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+$$('.nav-links a').forEach(a => a.onclick = () => $('#navLinks').classList.remove('open'));
 
 const lb = $('#lightbox');
-$('#gallery').addEventListener('click', e => { const img = e.target.closest('button')?.querySelector('img'); if (!img) return; $('#lbImg').src = img.src; $('#lbImg').alt = img.alt; lb.classList.add('open'); $('#lbClose').focus(); });
+document.addEventListener('click', e => {
+  const img = e.target.closest('#gallery button, [data-lb] figure')?.querySelector('img'); if (!img) return;
+  $('#lbImg').src = img.src; $('#lbImg').alt = img.alt; lb.classList.add('open'); $('#lbClose').focus();
+});
 lb.addEventListener('click', e => { if (e.target !== $('#lbImg')) lb.classList.remove('open'); });
 addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
 </script>
+
 </body>
 </html>
