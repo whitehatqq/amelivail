@@ -320,7 +320,7 @@
     .reveal { opacity: 1; transform: none; }
   }
 
-  /* ======================= ВЫБРАННЫЕ БЛОКИ (1B, 2A, 3B, 4B, 5C) ======================= */
+  /* ======================= ВЫБРАННЫЕ БЛОКИ (1B, 2A, 3C, 4B, 5C) ======================= */
   .reveal { opacity: 1; transform: none; }
   .track .mini i { width: var(--p, 0%); }
   [data-play] .i-pause { display: none; }
@@ -347,14 +347,23 @@
   .h2-play:hover { background: #d4263f; }
   .h2-side .full { display: block; margin-top: .8rem; font-size: .82rem; color: #6b6573; text-decoration: none; }
 
-  /* ---------- ABOUT B: манифест ---------- */
-  .a2 { text-align: center; }
-  .a2-text { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4.2vw, 3.5rem); line-height: 1.18; max-width: 1100px; margin: 1.6rem auto 2.4rem; text-wrap: balance; }
-  .a2-text .pic { display: inline-block; height: .95em; width: 2em; border-radius: 99px; object-fit: cover; vertical-align: -.12em; margin: 0 .1em; }
-  .a2-text .hl { color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; }
-  .a2-facts { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
-  .a2-facts span { padding: 10px 18px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--muted); font-size: .9rem; }
-  .a2-facts b { color: var(--text); }
+  /* ---------- ABOUT: бенто-плитки (вариант 3C) ---------- */
+  .a3 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); grid-template-areas: "photo bio bio num" "photo quote tags num2"; gap: 12px; }
+  .a3 > * { border-radius: 22px; border: 1px solid var(--line); background: var(--card); padding: clamp(18px, 2.4vw, 28px); min-width: 0; }
+  .a3-photo { grid-area: photo; padding: 0; overflow: hidden; position: relative; min-height: 420px; }
+  .a3-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 10%; }
+  .a3-photo figcaption { position: absolute; left: 14px; bottom: 14px; padding: 6px 12px; border-radius: 99px; background: rgba(11,10,15,.7); font-size: .8rem; font-weight: 700; }
+  .a3-bio { grid-area: bio; }
+  .a3-bio h3 { font-family: var(--display); font-size: 1.4rem; margin-bottom: .8rem; }
+  .a3-bio p { color: #c9c5d6; }
+  .a3-num { grid-area: num; display: flex; flex-direction: column; justify-content: space-between; background: var(--grad); color: #0b0a0f; border: 0; }
+  .a3-num.alt { grid-area: num2; background: var(--bg2); color: var(--text); border: 1px solid var(--line); }
+  .a3-num b { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; }
+  .a3-num span { font-weight: 700; font-size: .85rem; }
+  .a3-quote { grid-area: quote; font-family: var(--display); font-weight: 600; font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.35; }
+  .a3-quote cite { display: block; margin-top: .8rem; font-family: var(--body); font-style: normal; font-size: .8rem; color: var(--muted); }
+  .a3-tags { grid-area: tags; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+  .a3-tags span { padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); font-size: .82rem; font-weight: 600; }
 
   /* ---------- PHOTOS B: лента ---------- */
   .p2-strip { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 10px; scrollbar-width: none; padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); scroll-padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); }
@@ -384,6 +393,8 @@
   .c3-note { margin-top: 1rem; font-size: .72rem; color: var(--dim); }
 
   @media (max-width: 960px) {
+    .a3 { grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-areas: "photo photo" "bio bio" "num num2" "quote quote" "tags tags"; }
+    .a3-photo { min-height: 380px; }
   }
   @media (max-width: 720px) {
     .h2-top span:last-child { display: none; }
@@ -494,17 +505,19 @@
 
 
 <!-- ================= ОБ АРТИСТКЕ ================= -->
-<section id="about" class="a2">
+<section id="about" style="background:var(--bg2)">
   <div class="wrap">
-    <span class="eyebrow">Об артистке</span>
-    <p class="a2-text">
-      <span class="hl">Ameli Vail</span> <img class="pic" src="assets/img/hero.jpg" alt="" style="object-position:50% 15%"> пишет песни о том, что обычно не говорят вслух <img class="pic" src="assets/img/release-05.webp" alt=""> — про январский снег, ночные набережные <img class="pic" src="assets/img/release-01.webp" alt=""> и умение идти <span class="hl">дальше самой.</span>
-    </p>
-    <div class="a2-facts">
-      <span><b data-count>12</b> синглов</span>
-      <span><b>Инди-поп</b></span>
-      <span>на <b>русском</b></span>
-      <span><b>16+</b></span>
+    <div class="sec-head"><div><span class="eyebrow">Об артистке</span><h2 class="sec-title">Кто она</h2></div></div>
+    <div class="a3">
+      <figure class="a3-photo"><img src="assets/img/hero.jpg" alt="Ameli Vail"><figcaption>Ameli Vail</figcaption></figure>
+      <div class="a3-bio">
+        <h3>Инди-поп с уличной эстетикой</h3>
+        <p>Ameli Vail пишет инди-поп на стыке уличной эстетики и нежной лирики. Каждый релиз — отдельная история со своим визуалом: от холодного неона «Звонит и молчит» до тёплого света «Сердце задышит».</p>
+      </div>
+      <div class="a3-num"><b data-count>12</b><span>синглов на всех площадках</span></div>
+      <div class="a3-num alt"><b>16+</b><span>возрастная маркировка</span></div>
+      <blockquote class="a3-quote">«Дальше я сама» — это не просто название песни, а способ жить.<cite>— цитата-заглушка, заменить</cite></blockquote>
+      <div class="a3-tags"><span>инди-поп</span><span>лирика</span><span>ночной город</span><span>на русском</span><span>синглы</span></div>
     </div>
   </div>
 </section>
