@@ -498,10 +498,10 @@
    title   — название
    cover   — путь к обложке (или null → градиентная заглушка)
    link    — ссылка «Слушать полностью» (band.link и т.п.)
-   preview — файл-отрывок, например 'assets/audio/serdtse.mp3'.
-             Пока null → играет СИНТЕЗИРОВАННОЕ ДЕМО (не настоящая песня).
+   preview — файл-отрывок в assets/audio/ (30 сек, уже нарезан).
+             null → у трека не будет кнопки отрывка (только «Слушать полностью»).
    start   — с какой секунды файла начинать отрывок (например, с припева)
-   year    — год релиза (пока не указан)
+   year    — год релиза
    ===================================================================== */
 const PREVIEW_SECONDS = 30;
 const tracks = [
@@ -517,7 +517,7 @@ const tracks = [
   { title: 'Пыль в глаза оружие', cover: 'assets/img/cover-pyl-v-glaza-oruzhie.webp', link: 'https://band.link/X2gzA',             preview: 'assets/audio/pyl-v-glaza-oruzhie.mp3', start: 0, year: '2025', hue: 150 },
   { title: 'Звонит и молчит',     cover: 'assets/img/release-02.webp', link: 'https://band.link/R5mgU',             preview: 'assets/audio/zvonit-i-molchit.mp3', start: 0, year: '2025', hue: 245 },
   { title: 'Кричать',             cover: 'assets/img/cover-krichat.webp', link: 'https://band.link/ihgh6',             preview: 'assets/audio/krichat.mp3', start: 0, year: '2025', hue: 0   },
-  { title: 'Подруга января',      cover: 'assets/img/release-05.webp', link: 'https://band.link/2A9Ij',             preview: null, start: 0, year: '2024', hue: 200 },
+  { title: 'Подруга января',      cover: 'assets/img/release-05.webp', link: 'https://band.link/2A9Ij',             preview: 'assets/audio/podruga-yanvarya.mp3', start: 0, year: '2024', hue: 200 },
   { title: 'Песни о любви',       cover: 'assets/img/cover-pesni-o-lyubvi.webp', link: 'https://band.link/lslh6',             preview: 'assets/audio/pesni-o-lyubvi.mp3', start: 0, year: '2024', hue: 320 },
 ];
 
@@ -557,67 +557,7 @@ function drawWave(t) {
   $$('#wave .wave-layer').forEach(l => l.innerHTML = bars.join(''));
 }
 
-/* ---------- ДЕМО-ЗВУК (заглушка вместо настоящих отрывков) ---------- */
-const demoCache = new Map();
-async function renderDemo(t) {
-  if (demoCache.has(t.title)) return demoCache.get(t.title);
-  const sr = 22050, len = PREVIEW_SECONDS, ctx = new OfflineAudioContext(2, sr * len, sr);
-  const rnd = seeded(t.title + 'demo');
-  const bpm = 84 + Math.floor(rnd() * 36), beat = 60 / bpm, bar = beat * 4;
-  const root = 45 + Math.floor(rnd() * 7);
-  const progs = [[0, 8, 3, 10], [0, 5, 8, 7], [0, 10, 8, 3], [0, 3, 8, 10]];
-  const prog = progs[Math.floor(rnd() * progs.length)];
-  const hz = m => 440 * Math.pow(2, (m - 69) / 12);
-  const master = ctx.createGain(); master.gain.value = .55;
-  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400;
-  master.connect(lp).connect(ctx.destination);
-  const dl = ctx.createDelay(1); dl.delayTime.value = beat * .75; const fb = ctx.createGain(); fb.gain.value = .32;
-  dl.connect(fb).connect(dl); dl.connect(master);
-  const note = (f, t0, dur, type, vol, dest = master) => {
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = type; o.frequency.value = f;
-    g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(vol, t0 + Math.min(.08, dur / 4));
-    g.gain.setTargetAtTime(0, t0 + dur * .7, dur * .2);
-    o.connect(g); g.connect(dest); if (dest === master) g.connect(dl);
-    o.start(t0); o.stop(t0 + dur + .5);
-  };
-  const noiseBuf = ctx.createBuffer(1, sr * .2, sr); const nd = noiseBuf.getChannelData(0);
-  for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
-  const hat = t0 => { const s = ctx.createBufferSource(), g = ctx.createGain(), hp = ctx.createBiquadFilter();
-    hp.type = 'highpass'; hp.frequency.value = 7000; s.buffer = noiseBuf;
-    g.gain.setValueAtTime(.12, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + .06);
-    s.connect(hp).connect(g).connect(master); s.start(t0); };
-  const kick = t0 => { const o = ctx.createOscillator(), g = ctx.createGain();
-    o.frequency.setValueAtTime(120, t0); o.frequency.exponentialRampToValueAtTime(40, t0 + .15);
-    g.gain.setValueAtTime(.9, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + .35);
-    o.connect(g).connect(master); o.start(t0); o.stop(t0 + .4); };
-  const drumsFrom = bar * 2;
-  for (let b = 0, tt = 0; tt < len; b++, tt = b * bar) {
-    const r = root + prog[b % 4], minor = [0, 3, 7, 10, 14];
-    minor.slice(0, 4).forEach(iv => note(hz(r + 12 + iv), tt, bar, 'triangle', .07));
-    note(hz(r - 12), tt, beat * 1.5, 'sine', .35); note(hz(r - 12), tt + beat * 2.5, beat * 1.4, 'sine', .3);
-    for (let s = 0; s < 8; s++) if (rnd() > .35) note(hz(r + 24 + minor[Math.floor(rnd() * 5)]), tt + s * beat / 2, beat / 2, 'sine', .05);
-    if (tt >= drumsFrom) for (let k = 0; k < 4; k++) { if (k % 2 === 0) kick(tt + k * beat); hat(tt + k * beat + beat / 2); }
-  }
-  const buf = await ctx.startRendering();
-  const url = URL.createObjectURL(toWav(buf));
-  demoCache.set(t.title, url);
-  return url;
-}
-function toWav(buf) {
-  const ch = buf.numberOfChannels, n = buf.length, sr = buf.sampleRate, ab = new ArrayBuffer(44 + n * ch * 2), v = new DataView(ab);
-  const w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
-  w(0, 'RIFF'); v.setUint32(4, 36 + n * ch * 2, true); w(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
-  v.setUint16(22, ch, true); v.setUint32(24, sr, true); v.setUint32(28, sr * ch * 2, true); v.setUint16(32, ch * 2, true); v.setUint16(34, 16, true);
-  w(36, 'data'); v.setUint32(40, n * ch * 2, true);
-  const data = [...Array(ch)].map((_, c) => buf.getChannelData(c));
-  for (let i = 0, o = 44; i < n; i++) for (let c = 0; c < ch; c++, o += 2) {
-    const s = Math.max(-1, Math.min(1, data[c][i])); v.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7fff, true);
-  }
-  return new Blob([ab], { type: 'audio/wav' });
-}
-
-/* ---------- ПЛЕЕР: один звук на всю страницу, все варианты синхронно ---------- */
+/* ---------- ПЛЕЕР: один звук на всю страницу ---------- */
 const audio = new Audio();
 audio.preload = 'none';
 let cur = 0, playing = false, fadeTimer = null, fadingOut = false;
@@ -652,7 +592,7 @@ function setTrack(i) {
   $('#tDur').textContent = fmt(PREVIEW_SECONDS);
   $('#pLegal').textContent = t.preview
     ? `Фрагмент ${PREVIEW_SECONDS} сек. © Ameli Vail. Размещён правообладателем для ознакомления.`
-    : 'Сейчас звучит демо-звук (заглушка), а не песня. Замените на отрывок в массиве tracks → preview.';
+    : 'Отрывок скоро появится — пока можно послушать трек полностью на площадках.';
   $('#dCover').innerHTML = coverHTML(t);
   $('#dTitle').textContent = t.title;
   drawWave(t);
@@ -673,7 +613,8 @@ async function play(i) {
   const t = tracks[cur];
   setLoading(true);
   try {
-    const src = t.preview || await renderDemo(t);
+    const src = t.preview;
+    if (!src) throw new Error('нет отрывка');
     if (audio.dataset.src !== src) { audio.src = src; audio.dataset.src = src; audio.currentTime = t.start; }
     audio.volume = 0; fadingOut = false;
     await audio.play();
