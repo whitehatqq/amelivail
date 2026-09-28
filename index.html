@@ -172,6 +172,14 @@
   .track .ext:hover { color: #fff; background: var(--ink); }
   .track .ext svg { width: 16px; height: 16px; }
 
+  /* список свёрнут до первых VISIBLE_TRACKS треков, остальные — по кнопке */
+  .tracks-col { min-width: 0; }
+  .tracks.collapsed .track:nth-child(n+9) { display: none; }
+  .more-btn { display: flex; align-items: center; justify-content: center; gap: .5rem; width: 100%; margin-top: 10px; padding: 14px; border-radius: 16px; border: 1px dashed rgba(20,17,23,.25); font-weight: 700; font-size: .9rem; color: var(--ink); transition: background .2s, border-color .2s; }
+  .more-btn:hover { background: var(--surface); border-color: var(--accent); color: var(--accent); }
+  .more-btn svg { width: 16px; height: 16px; transition: transform .3s; }
+  .more-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+
   /* градиентная заглушка обложки для релизов без картинки */
   .ph { display: grid; place-items: center; font-family: var(--display); font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: .02em; }
   .track .cov .ph { font-size: .5rem; line-height: 1.1; text-align: center; padding: 4px; overflow-wrap: anywhere; }
@@ -380,7 +388,10 @@
       </div>
 
       <!-- список треков -->
-      <ol class="tracks reveal" id="tracks" aria-label="Список треков"></ol>
+      <div class="tracks-col">
+        <ol class="tracks collapsed" id="tracks" aria-label="Список треков"></ol>
+        <button class="more-btn" id="moreTracks" aria-expanded="false" hidden></button>
+      </div>
     </div>
   </div>
 </section>
@@ -494,6 +505,7 @@
 const PREVIEW_SECONDS = 30;
 const tracks = [
   { title: 'Все на ноль',         cover: 'assets/img/cover-vse-na-nol.webp', link: 'https://band.link/amelivaivsnanol', preview: null, start: 0, year: '', hue: 350 },
+  { title: 'Как горячий чай',     cover: 'assets/img/cover-kak-goryachiy-chay.webp', link: 'https://band.link/amelivailgoryachij', preview: null, start: 0, year: '', hue: 25 },
   { title: 'Сердце задышит',      cover: 'assets/img/release-06.webp', link: 'https://band.link/amelivailserdtse',   preview: null, start: 0, year: '', hue: 60  },
   { title: 'Подруга января',      cover: 'assets/img/release-05.webp', link: 'https://band.link/2A9Ij',             preview: null, start: 0, year: '', hue: 200 },
   { title: 'Дальше я сама',       cover: 'assets/img/release-01.webp', link: 'https://band.link/AfQFg',             preview: null, start: 0, year: '', hue: 35  },
@@ -506,7 +518,6 @@ const tracks = [
   { title: 'Песни о любви',       cover: 'assets/img/cover-pesni-o-lyubvi.webp', link: 'https://band.link/lslh6',             preview: null, start: 0, year: '', hue: 320 },
   { title: 'Лето без лести',      cover: 'assets/img/cover-leto-bez-lesti.webp', link: 'https://band.link/3jnEj',             preview: null, start: 0, year: '', hue: 45  },
   { title: 'Пыль в глаза оружие', cover: 'assets/img/cover-pyl-v-glaza-oruzhie.webp', link: 'https://band.link/X2gzA',             preview: null, start: 0, year: '', hue: 150 },
-  { title: 'Как горячий чай',     cover: 'assets/img/cover-kak-goryachiy-chay.webp', link: 'https://band.link/amelivailgoryachij', preview: null, start: 0, year: '', hue: 25 },
 ];
 
 const $ = s => document.querySelector(s);
@@ -610,8 +621,28 @@ const audio = new Audio();
 audio.preload = 'none';
 let cur = 0, playing = false, fadeTimer = null, fadingOut = false;
 
+/* ---------- «Показать все треки» ---------- */
+const VISIBLE_TRACKS = 8;
+function expandTracks(open) {
+  const btn = $('#moreTracks');
+  $('#tracks').classList.toggle('collapsed', !open);
+  btn.setAttribute('aria-expanded', open);
+  btn.innerHTML = (open ? 'Свернуть список' : `Показать все треки (${tracks.length})`) +
+    ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>';
+}
+if (tracks.length > VISIBLE_TRACKS) {
+  $('#moreTracks').hidden = false;
+  expandTracks(false);
+  $('#moreTracks').onclick = () => {
+    const open = $('#moreTracks').getAttribute('aria-expanded') !== 'true';
+    expandTracks(open);
+    if (!open) $('#music').scrollIntoView({ behavior: 'smooth' });
+  };
+} else $('#tracks').classList.remove('collapsed');
+
 function setTrack(i) {
   cur = (i + tracks.length) % tracks.length;
+  if (cur >= VISIBLE_TRACKS) expandTracks(true);
   const t = tracks[cur];
   $('#pCover').innerHTML = coverHTML(t) + `<span class="badge">Отрывок · 0:${PREVIEW_SECONDS}</span><div class="eq"><i></i><i></i><i></i><i></i></div>`;
   $('#pTitle').textContent = t.title;
