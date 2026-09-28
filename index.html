@@ -102,12 +102,14 @@
   .icon-btn svg { width: 18px; height: 18px; }
 
   /* ---------- ГЛАВНЫЙ ЭКРАН: журнальная обложка ---------- */
-  .h2 { background: var(--bg); color: var(--ink); padding: 110px 0 64px; overflow: hidden; }
+  .h2 { background: var(--bg); color: var(--ink); padding: 110px 0 0; overflow: hidden; }
   .h2-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 12px; }
   .h2-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 10.6vw; line-height: .85; letter-spacing: -.045em; text-align: center; white-space: nowrap; margin: 2.2rem 0 0; position: relative; z-index: 2; pointer-events: none; }
   .h2-stage { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: clamp(20px, 4vw, 56px); align-items: end; margin-top: -3.4vw; position: relative; z-index: 1; }
-  .h2-photo { width: min(400px, 70vw); aspect-ratio: 3/4; overflow: hidden; border-radius: 6px; box-shadow: 0 40px 80px -30px rgba(60,20,30,.45); max-width: 100%; }
-  .h2-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; }
+  /* фото без рамки: вырезанная фигура стоит прямо на фоне, низ совпадает с краем экрана */
+  .h2-photo { width: min(470px, 72vw); max-width: 100%; align-self: end; }
+  .h2-photo img { width: 100%; height: auto; }
+  .h2-side { padding-bottom: 64px; }
   .h2-side p { font-size: 1.05rem; max-width: 300px; color: #3d3845; }
   .h2-side a.more { display: inline-block; margin-top: 1rem; font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--accent); }
   .h2-side.r { justify-self: end; text-align: right; }
@@ -273,7 +275,10 @@
     .h2-side.r { justify-self: center; text-align: center; }
     .h2-side p { margin: 0 auto; }
     .h2-side.l { order: 2; }
-    .h2-photo { width: min(320px, 82vw); }
+    .h2-photo { width: min(360px, 88vw); -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%); mask-image: linear-gradient(180deg, #000 78%, transparent 100%); }
+    .h2-side { padding-bottom: 0; }
+    .h2-side.r { padding-bottom: 48px; }
+    .h2-side.l { padding-bottom: 56px; }
     .track { grid-template-columns: 48px minmax(0,1fr) auto; gap: 12px; }
     .track .num, .track .dur { display: none; }
     .track .cov { width: 48px; height: 48px; }
@@ -319,7 +324,7 @@
         <p>Искренние тексты, атмосферный звук и живые эмоции. Песни о том, что она не может сказать вслух.</p>
         <a class="more" href="#music">Вся музыка ↓</a>
       </div>
-      <figure class="h2-photo"><img src="assets/img/hero.jpg" alt="Ameli Vail — портрет"></figure>
+      <figure class="h2-photo"><img src="assets/img/hero-cutout.png" alt="Ameli Vail — портрет" width="1000" height="1345" fetchpriority="high"></figure>
       <div class="h2-side r">
         <small>Новый сингл</small>
         <strong>Сердце задышит</strong>
