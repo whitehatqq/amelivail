@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ameli Vail — варианты</title>
+<meta name="description" content="Ameli Vail — инди-поп исполнительница. Музыка, фото, контакты для букинга.">
+<meta name="theme-color" content="#0b0a0f">
+<!-- ЗАКРЫТЫЙ ПРОЕКТ: пока не индексировать поисковиками. Удалить строку перед запуском. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Ameli Vail">
+<meta property="og:description" content="Инди-поп. Слушай новые синглы.">
+<meta property="og:image" content="assets/img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0b0a0f;
+    --bg2: #121119;
+    --card: rgba(255,255,255,0.04);
+    --card-hover: rgba(255,255,255,0.07);
+    --line: rgba(255,255,255,0.09);
+    --text: #f3f1f7;
+    --muted: #9a96a8;
+    --dim: #5f5b6c;
+    --accent: #8f7bff;       /* фиолетовый из обложки «Звонит и молчит» */
+    --accent2: #ffb86b;      /* тёплый янтарь из «Дальше я сама» */
+    --grad: linear-gradient(120deg, var(--accent) 0%, #c07bff 45%, var(--accent2) 100%);
+    --radius: 18px;
+    --display: 'Unbounded', system-ui, sans-serif;
+    --body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --wrap: 1240px;
+    --gutter: clamp(16px, 4vw, 40px);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* плёночное зерно поверх всего сайта */
+  body::after {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: .06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---------- NAV ---------- */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    transition: background .3s, border-color .3s, backdrop-filter .3s;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled { background: rgba(11,10,15,.72); backdrop-filter: blur(16px); border-color: var(--line); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .logo { font-family: var(--display); font-weight: 800; font-size: 1.05rem; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+  .logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a { text-decoration: none; font-size: .85rem; font-weight: 600; color: var(--muted); transition: color .2s; }
+  .nav-links a:hover { color: var(--text); }
+  .age { font-size: .7rem; font-weight: 700; border: 1px solid var(--line); border-radius: 6px; padding: 2px 6px; color: var(--muted); }
+  .burger { display: none; width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); align-items: center; justify-content: center; }
+  .burger svg { width: 18px; height: 18px; }
+
+  /* ---------- HERO ---------- */
+  .hero { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; }
+  /* фото — правая половина экрана, текст — слева на тёмном */
+  .hero-photo { position: absolute; top: 0; bottom: 0; right: 0; width: 52%; overflow: hidden; }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; transform: scale(1.06); animation: slowzoom 18s ease-out forwards; }
+  @keyframes slowzoom { to { transform: scale(1); } }
+  .hero-photo::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(11,10,15,.8) 0, transparent 110px),
+      linear-gradient(90deg, var(--bg) 0%, rgba(11,10,15,.55) 16%, transparent 38%),
+      linear-gradient(0deg, var(--bg) 0%, transparent 28%);
+  }
+  .hero-glow { position: absolute; width: 60vw; height: 60vw; left: -20vw; bottom: -30vw; border-radius: 50%; background: radial-gradient(circle, rgba(143,123,255,.35), transparent 65%); filter: blur(40px); }
+  .hero-content { position: relative; width: 100%; padding-bottom: clamp(48px, 9vh, 110px); padding-top: 120px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+  .eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+  .hero-name {
+    font-family: var(--display); font-weight: 800; text-transform: uppercase;
+    font-size: clamp(3.2rem, 11vw, 9.5rem); line-height: .86; letter-spacing: -.02em; margin: 1.2rem 0 1.6rem;
+  }
+  .hero-name .outline { color: transparent; -webkit-text-stroke: 2px rgba(255,255,255,.85); display: block; }
+  .hero-desc { max-width: 440px; color: #c9c5d6; font-size: 1.05rem; margin-bottom: 2rem; }
+
+  .single-card {
+    display: flex; align-items: center; gap: 1rem; max-width: 460px; padding: .8rem;
+    background: rgba(20,18,28,.6); backdrop-filter: blur(18px); border: 1px solid var(--line); border-radius: 22px;
+  }
+  .single-card img { width: 72px; height: 72px; border-radius: 14px; object-fit: cover; }
+  .single-meta { flex: 1; min-width: 0; }
+  .single-meta small { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--accent2); }
+  .single-meta strong { display: block; font-family: var(--display); font-weight: 600; font-size: 1.05rem; line-height: 1.25; margin: .15rem 0 .35rem; }
+  .single-meta a { font-size: .8rem; color: var(--muted); text-decoration: none; }
+  .single-meta a:hover { color: var(--text); }
+
+  .play-btn {
+    flex: none; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center;
+    background: var(--text); color: var(--bg); transition: transform .2s, background .2s; position: relative;
+  }
+  .play-btn:hover { transform: scale(1.06); }
+  .play-btn svg { width: 20px; height: 20px; }
+  .play-btn .i-pause, .is-playing .play-btn .i-play, .play-btn.is-playing .i-play { display: none; }
+  .is-playing .play-btn .i-pause, .play-btn.is-playing .i-pause { display: block; }
+  .play-btn.is-loading::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--accent); animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .scroll-hint { position: absolute; right: var(--gutter); bottom: 40px; writing-mode: vertical-rl; font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+
+  /* ---------- MARQUEE ---------- */
+  .marquee { border-block: 1px solid var(--line); overflow: hidden; padding: 1.1rem 0; background: var(--bg2); }
+  .marquee-track { display: flex; gap: 3rem; width: max-content; animation: marquee 45s linear infinite; }
+  .marquee span { font-family: var(--display); font-weight: 600; font-size: clamp(1.1rem, 2.4vw, 1.6rem); text-transform: uppercase; white-space: nowrap; color: var(--dim); }
+  .marquee span:nth-child(3n+1) { color: var(--text); }
+  .marquee span::after { content: '✦'; margin-left: 3rem; color: var(--accent); }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: clamp(72px, 11vw, 140px) 0; }
+  .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; }
+  .sec-title { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 5.5vw, 4rem); line-height: 1; text-transform: uppercase; letter-spacing: -.01em; margin-top: .8rem; }
+  .sec-note { max-width: 380px; color: var(--muted); font-size: .92rem; }
+
+  /* ---------- MUSIC ---------- */
+  .music-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+
+  .player {
+    position: sticky; top: 96px; padding: clamp(16px, 2vw, 24px); border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border: 1px solid var(--line);
+  }
+  .player-cover { position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; background: var(--bg2); }
+  .player-cover img, .player-cover .ph { width: 100%; height: 100%; object-fit: cover; transition: opacity .4s; }
+  .player-cover .badge { position: absolute; top: 12px; left: 12px; padding: 5px 10px; border-radius: 99px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(11,10,15,.7); backdrop-filter: blur(8px); }
+  .eq { position: absolute; right: 14px; bottom: 14px; display: flex; gap: 3px; align-items: end; height: 22px; opacity: 0; transition: opacity .3s; }
+  .eq i { width: 4px; background: #fff; border-radius: 2px; animation: eq 1s ease-in-out infinite; }
+  .eq i:nth-child(2) { animation-delay: -.3s } .eq i:nth-child(3) { animation-delay: -.6s } .eq i:nth-child(4) { animation-delay: -.15s }
+  @keyframes eq { 0%,100% { height: 20% } 50% { height: 100% } }
+  .player.is-playing .eq { opacity: 1; }
+
+  .player-info { display: flex; align-items: center; gap: 1rem; margin: 1.2rem 0 1rem; }
+  .player-info .t { flex: 1; min-width: 0; }
+  .player-info h3 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; line-height: 1.2; }
+  .player-info p { color: var(--muted); font-size: .88rem; }
+
+  .wave { position: relative; height: 56px; cursor: pointer; --p: 0%; }
+  .wave-layer { position: absolute; inset: 0; display: flex; align-items: center; gap: 3px; }
+  .wave-layer i { flex: 1; border-radius: 3px; background: rgba(255,255,255,.16); min-height: 3px; }
+  .wave-layer.fill { clip-path: inset(0 calc(100% - var(--p)) 0 0); }
+  .wave-layer.fill i { background: var(--grad); background-size: 2000% 100%; }
+  .times { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: .5rem; }
+
+  .player-actions { display: flex; gap: .6rem; margin-top: 1.2rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1.3rem; border-radius: 99px;
+    font-weight: 700; font-size: .88rem; text-decoration: none; transition: transform .2s, background .2s, border-color .2s;
+  }
+  .btn svg { width: 16px; height: 16px; }
+  .btn-primary { background: var(--grad); color: #0b0a0f; }
+  .btn-primary:hover { transform: translateY(-2px); }
+  .btn-ghost { border: 1px solid var(--line); background: var(--card); }
+  .btn-ghost:hover { border-color: rgba(255,255,255,.25); }
+  .icon-btn { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; }
+  .icon-btn:hover { background: var(--card-hover); }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  .legal-mini { margin-top: 1.1rem; font-size: .74rem; line-height: 1.5; color: var(--dim); }
+
+  /* трек-лист */
+  .tracks { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .track {
+    display: grid; grid-template-columns: 28px 56px minmax(0,1fr) auto auto; align-items: center; gap: 14px;
+    padding: 10px 12px 10px 10px; border-radius: 16px; border: 1px solid transparent; transition: background .2s, border-color .2s; cursor: pointer;
+  }
+  .track:hover { background: var(--card); }
+  .track.active { background: var(--card-hover); border-color: var(--line); }
+  .track .num { font-size: .8rem; color: var(--dim); text-align: center; font-variant-numeric: tabular-nums; }
+  .track.active .num { color: var(--accent); }
+  .track .cov { position: relative; width: 56px; height: 56px; border-radius: 12px; overflow: hidden; }
+  .track .cov img, .track .cov .ph { width: 100%; height: 100%; object-fit: cover; }
+  .track .cov .ov { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(0,0,0,.45); opacity: 0; transition: opacity .2s; }
+  .track .cov .ov svg { width: 18px; height: 18px; }
+  .track:hover .cov .ov, .track.active .cov .ov { opacity: 1; }
+  .track .cov .i-pause { display: none; }
+  .track.is-playing .cov .i-pause { display: block; }
+  .track.is-playing .cov .i-play { display: none; }
+  .track .ttl { min-width: 0; }
+  .track .ttl b { display: block; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .track .ttl span { font-size: .8rem; color: var(--muted); }
+  .track .mini { position: relative; height: 3px; border-radius: 3px; background: rgba(255,255,255,.08); margin-top: 8px; overflow: hidden; display: none; }
+  .track.active .mini { display: block; }
+  .track .mini i { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--grad); }
+  .track .dur { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .track .ext { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: var(--muted); text-decoration: none; }
+  .track .ext:hover { color: var(--text); background: var(--card-hover); }
+  .track .ext svg { width: 16px; height: 16px; }
+
+  /* генеративная заглушка обложки для релизов без картинки */
+  .ph { display: grid; place-items: center; font-family: var(--display); font-weight: 800; color: rgba(255,255,255,.9); text-transform: uppercase; letter-spacing: .02em; }
+  .track .cov .ph { font-size: .7rem; }
+  .player-cover .ph { font-size: clamp(2rem, 5vw, 3.4rem); text-align: center; padding: 1rem; line-height: 1; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: minmax(0,5fr) minmax(0,6fr); gap: clamp(24px, 5vw, 72px); align-items: center; }
+  .about-photo { position: relative; border-radius: 28px; overflow: hidden; aspect-ratio: 4/5; }
+  .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .about-photo .tag { position: absolute; left: 16px; bottom: 16px; padding: 8px 14px; border-radius: 99px; background: rgba(11,10,15,.7); backdrop-filter: blur(10px); font-size: .8rem; font-weight: 600; }
+  .about-text p { color: #c9c5d6; font-size: 1.08rem; margin-bottom: 1.1rem; }
+  .about-text .lead { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem, 2.4vw, 1.8rem); line-height: 1.3; color: var(--text); margin-bottom: 1.6rem; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 2rem; }
+  .fact { padding: 18px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+  .fact b { display: block; font-family: var(--display); font-size: 1.6rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .fact span { font-size: .8rem; color: var(--muted); }
+
+  /* ---------- GALLERY ---------- */
+  .gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 12px; }
+  .gallery button { position: relative; overflow: hidden; border-radius: 18px; aspect-ratio: 1; }
+  .gallery button:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1), filter .4s; filter: saturate(.85); }
+  .gallery button:hover img { transform: scale(1.05); filter: saturate(1.05); }
+
+  .lightbox { position: fixed; inset: 0; z-index: 200; background: rgba(5,5,8,.92); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; padding: 24px; }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: min(92vw, 900px); max-height: 86vh; border-radius: 16px; }
+  .lightbox .close { position: absolute; top: 20px; right: 20px; }
+
+  /* ---------- CONTACTS ---------- */
+  .contact-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; }
+  .booking {
+    padding: clamp(24px, 4vw, 48px); border-radius: 28px; position: relative; overflow: hidden;
+    background: radial-gradient(120% 120% at 0% 0%, rgba(143,123,255,.35), transparent 55%), radial-gradient(100% 100% at 100% 100%, rgba(255,184,107,.22), transparent 55%), var(--bg2);
+    border: 1px solid var(--line);
+  }
+  .booking h3 { font-family: var(--display); font-weight: 800; font-size: clamp(1.6rem, 3.5vw, 2.6rem); line-height: 1.05; text-transform: uppercase; margin: .8rem 0 1rem; }
+  .booking p { color: #c9c5d6; margin-bottom: 1.6rem; max-width: 420px; }
+  .mail { font-family: var(--display); font-weight: 600; font-size: clamp(1rem, 2.2vw, 1.35rem); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,.3); word-break: break-all; }
+  .socials { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+  .social {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 2rem; padding: 20px; border-radius: 20px; min-height: 130px;
+    background: var(--card); border: 1px solid var(--line); text-decoration: none; transition: background .2s, transform .2s, border-color .2s;
+  }
+  .social:hover { background: var(--card-hover); transform: translateY(-3px); border-color: rgba(255,255,255,.2); }
+  .social .top { display: flex; justify-content: space-between; align-items: center; }
+  .social .top svg { width: 24px; height: 24px; }
+  .social .top .arr { width: 16px; height: 16px; color: var(--muted); }
+  .social b { font-weight: 700; }
+  .social small { display: block; color: var(--muted); font-size: .78rem; }
+  .social sup { color: var(--accent2); font-weight: 700; }
+
+  /* ---------- FOOTER ---------- */
+  footer { border-top: 1px solid var(--line); padding: 48px 0 120px; color: var(--muted); font-size: .82rem; }
+  .foot-top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+  .foot-legal { display: grid; gap: .6rem; max-width: 820px; color: var(--dim); font-size: .76rem; line-height: 1.55; }
+  .foot-legal b { color: var(--muted); font-weight: 600; }
+
+  /* ---------- STICKY MINI PLAYER ---------- */
+  .dock {
+    position: fixed; left: 50%; bottom: 16px; z-index: 60; width: min(640px, calc(100% - 24px));
+    display: flex; align-items: center; gap: 12px; padding: 8px 10px 8px 8px; border-radius: 20px;
+    background: rgba(24,22,32,.82); backdrop-filter: blur(20px); border: 1px solid var(--line); box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    transform: translate(-50%, 140%); transition: transform .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .dock.show:not(.hidden-by-player) { transform: translate(-50%, 0); }
+  .dock img, .dock .ph { width: 48px; height: 48px; border-radius: 12px; object-fit: cover; flex: none; font-size: .6rem; }
+  .dock .t { flex: 1; min-width: 0; }
+  .dock .t b { display: block; font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dock .t span { font-size: .74rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .dock .bar { position: absolute; left: 18px; right: 18px; bottom: 0; height: 2px; border-radius: 2px; overflow: hidden; }
+  .dock .bar i { display: block; height: 100%; width: 0; background: var(--grad); }
+  .dock .play-btn { width: 44px; height: 44px; }
+  .dock .play-btn svg { width: 16px; height: 16px; }
+  .dock .icon-btn { width: 40px; height: 40px; border: 0; }
+
+  /* ---------- REVEAL ---------- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 960px) {
+    .music-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .player { position: relative; top: 0; }
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 720px) {
+    .nav-links { position: fixed; top: 72px; left: 12px; right: 12px; flex-direction: column; gap: 0; padding: 8px; border-radius: 20px; background: rgba(20,18,28,.96); border: 1px solid var(--line); display: none; }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 14px 16px; font-size: 1rem; }
+    .burger { display: inline-flex; }
+    .hero-photo { left: 0; width: 100%; bottom: auto; height: 68svh; }
+    .hero-photo img { object-position: 50% 10%; }
+    .hero-name { font-size: 17vw; }
+    .hero-photo::after { background: linear-gradient(180deg, rgba(11,10,15,.8) 0, transparent 90px), linear-gradient(0deg, var(--bg) 18%, rgba(11,10,15,.82) 45%, transparent 70%); }
+    .scroll-hint { display: none; }
+    .track { grid-template-columns: 48px minmax(0,1fr) auto; gap: 12px; }
+    .track .num, .track .dur { display: none; }
+    .track .cov { width: 48px; height: 48px; }
+    .facts { grid-template-columns: 1fr 1fr 1fr; }
+    .fact { padding: 14px; }
+    .fact b { font-size: 1.2rem; }
+    .socials { grid-template-columns: 1fr 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  /* ======================= СТРАНИЦА ВАРИАНТОВ ======================= */
+  .reveal { opacity: 1; transform: none; }
+  .track .mini i { width: var(--p, 0%); }
+  [data-play] .i-pause { display: none; }
+  [data-play].is-playing .i-pause { display: block; }
+  [data-play].is-playing .i-play { display: none; }
+
+  .intro { padding: 120px 0 40px; }
+  .intro h1 { font-family: var(--display); font-weight: 800; font-size: clamp(1.8rem, 4vw, 3rem); text-transform: uppercase; line-height: 1.05; margin: .8rem 0 1rem; }
+  .intro p { color: var(--muted); max-width: 640px; }
+  .jump { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 2rem; }
+  .jump div { padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+  .jump b { display: block; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+  .jump a { display: inline-block; margin-right: 6px; padding: 4px 12px; border-radius: 99px; border: 1px solid var(--line); text-decoration: none; font-weight: 700; font-size: .85rem; }
+  .jump a:hover { background: var(--card-hover); }
+
+  .vlabel {
+    position: relative; z-index: 5; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 14px var(--gutter); background: #fde047; color: #111; font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: .82rem;
+    border-block: 2px dashed #111; scroll-margin-top: 72px;
+  }
+  .vlabel .tag { background: #111; color: #fde047; font-weight: 800; padding: 4px 10px; border-radius: 6px; letter-spacing: .06em; }
+  .vlabel b { font-weight: 800; }
+  .vlabel span:last-child { opacity: .75; }
+
+  /* ---------- HERO B: журнальная обложка ---------- */
+  .h2 { background: #ebe7e2; color: #141217; padding: 110px 0 64px; overflow: hidden; }
+  .h2-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #6b6573; border-bottom: 1px solid rgba(0,0,0,.15); padding-bottom: 12px; }
+  .h2-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 10.6vw; line-height: .85; letter-spacing: -.045em; text-align: center; white-space: nowrap; margin: 2.2rem 0 0; position: relative; z-index: 0; }
+  .h2-stage { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: clamp(20px, 4vw, 56px); align-items: end; margin-top: -2.4vw; position: relative; z-index: 1; }
+  .h2-photo { width: min(400px, 70vw); aspect-ratio: 3/4; overflow: hidden; border-radius: 6px; box-shadow: 0 40px 80px -30px rgba(40,20,30,.45); max-width: 100%; }
+  .h2-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 8%; }
+  .h2-side p { font-size: 1.05rem; max-width: 300px; color: #3d3845; }
+  .h2-side a.more { display: inline-block; margin-top: 1rem; font-weight: 700; color: #141217; text-decoration: none; border-bottom: 2px solid #d4263f; }
+  .h2-side.r { justify-self: end; text-align: right; }
+  .h2-side small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #d4263f; }
+  .h2-side strong { display: block; font-family: var(--display); font-size: clamp(1.3rem, 2.4vw, 2rem); line-height: 1.1; margin: .4rem 0 1rem; }
+  .h2-play { display: inline-flex; align-items: center; gap: .6rem; padding: .9rem 1.4rem; border-radius: 99px; background: #141217; color: #fff; font-weight: 700; font-size: .9rem; }
+  .h2-play svg { width: 16px; height: 16px; }
+  .h2-play:hover { background: #d4263f; }
+  .h2-side .full { display: block; margin-top: .8rem; font-size: .82rem; color: #6b6573; text-decoration: none; }
+
+  /* ---------- HERO C: арка и винил ---------- */
+  .h3 { min-height: 100svh; display: flex; align-items: center; padding: 110px 0 64px;
+    background: radial-gradient(60% 60% at 75% 45%, rgba(214,38,63,.22), transparent 70%), radial-gradient(40% 50% at 10% 90%, rgba(143,123,255,.18), transparent 70%), var(--bg); }
+  .h3-grid { display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 60px); align-items: center; width: 100%; }
+  .h3-vert { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--display); font-weight: 800; font-size: 5.4rem; line-height: 1; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.28); white-space: nowrap; justify-self: center; }
+  .h3-arch { aspect-ratio: 3/4; max-height: 76vh; max-width: 100%; border-radius: 999px 999px 28px 28px; overflow: hidden; border: 1px solid var(--line); justify-self: center; }
+  .h3-arch img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 10%; }
+  .h3-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6vw, 5.4rem); line-height: .9; text-transform: uppercase; margin: 1rem 0 2rem; }
+  .h3-name em { font-style: normal; color: #ff4d63; }
+  .vinyl { position: relative; width: clamp(160px, 16vw, 220px); aspect-ratio: 1; margin-bottom: 1.6rem; }
+  .vinyl .cov, .vinyl .cov img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 2; box-shadow: 0 20px 40px rgba(0,0,0,.5); }
+  .vinyl .dw { position: absolute; inset: 4%; transform: translateX(34%); transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .vinyl.is-playing .dw { transform: translateX(52%); }
+  .disc { width: 100%; height: 100%; border-radius: 50%; animation: spin 2.4s linear infinite; animation-play-state: paused;
+    background: radial-gradient(circle, #ff4d63 0 15%, #111 15.5% 17%, transparent 17.5%), repeating-radial-gradient(circle, #151418 0 2px, #1f1d24 2px 4px); box-shadow: inset 0 0 0 2px #000; }
+  .is-playing .disc { animation-play-state: running; }
+  .h3-meta small { display: block; font-size: .7rem; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #ff4d63; }
+  .h3-meta strong { display: block; font-family: var(--display); font-weight: 600; font-size: 1.4rem; margin: .3rem 0 1.2rem; }
+  .h3-actions { display: flex; gap: .8rem; align-items: center; flex-wrap: wrap; }
+
+  /* ---------- MUSIC B: сетка обложек с пластинкой ---------- */
+  .m2-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: clamp(20px, 3vw, 36px) clamp(14px, 2vw, 24px); }
+  .m2-card { --p: 0%; }
+  .m2-art { position: relative; width: 84%; aspect-ratio: 1; }
+  .m2-art .dw { position: absolute; inset: 5%; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .m2-card:hover .dw, .m2-card.active .dw { transform: translateX(20%); }
+  .m2-cover { position: absolute; inset: 0; z-index: 2; border-radius: 12px; overflow: hidden; box-shadow: 0 16px 36px rgba(0,0,0,.45); }
+  .m2-cover img, .m2-cover .ph { width: 100%; height: 100%; object-fit: cover; font-size: clamp(.8rem, 1.6vw, 1.2rem); text-align: center; padding: 8px; line-height: 1.05; }
+  .m2-cover img { padding: 0; }
+  .m2-play { position: absolute; z-index: 3; right: 10px; bottom: 10px; width: 50px; height: 50px; border-radius: 50%; padding: 3px; background: conic-gradient(#fff var(--p), rgba(255,255,255,.28) 0); transition: transform .2s; }
+  .m2-play:hover { transform: scale(1.08); }
+  .m2-play span { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: rgba(11,10,15,.85); }
+  .m2-play svg { width: 16px; height: 16px; }
+  .m2-meta { display: flex; justify-content: space-between; align-items: start; gap: 8px; margin-top: 14px; width: 84%; }
+  .m2-meta b { font-weight: 700; line-height: 1.3; }
+  .m2-meta span { display: block; font-size: .78rem; color: var(--muted); }
+  .m2-meta a { color: var(--muted); text-decoration: none; font-weight: 700; }
+  .m2-meta a:hover { color: var(--text); }
+  .m2-card.active .m2-meta b { color: var(--accent); }
+
+  /* ---------- MUSIC C: типографический список ---------- */
+  .m3-list { list-style: none; border-top: 1px solid var(--line); }
+  .m3-row { --p: 0%; position: relative; display: grid; grid-template-columns: 56px minmax(0,1fr) auto 52px 40px; align-items: center; gap: 16px; padding: clamp(14px, 2vw, 22px) 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+  .m3-row .n { font-size: .8rem; color: var(--dim); font-variant-numeric: tabular-nums; }
+  .m3-row .t { font-family: var(--display); font-weight: 600; font-size: clamp(1.25rem, 4vw, 3rem); line-height: 1.05; text-transform: uppercase; transition: color .25s, transform .35s; }
+  .m3-row:hover .t, .m3-row.active .t { color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; transform: translateX(10px); }
+  .m3-row .meta { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .m3-row .st { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; }
+  .m3-row .st svg { width: 14px; height: 14px; }
+  .m3-row.is-playing .st { background: var(--text); color: var(--bg); }
+  .m3-row .st .i-pause { display: none; } .m3-row.is-playing .st .i-pause { display: block; } .m3-row.is-playing .st .i-play { display: none; }
+  .m3-row a { color: var(--muted); text-decoration: none; font-weight: 700; text-align: center; }
+  .m3-row a:hover { color: var(--text); }
+  .m3-row .pr { position: absolute; left: 0; bottom: -1px; height: 2px; width: var(--p); background: var(--grad); }
+  .m3-float { position: fixed; left: 0; top: 0; width: 200px; aspect-ratio: 1; border-radius: 14px; overflow: hidden; pointer-events: none; z-index: 40; opacity: 0; transform: translate(-50%, -50%) scale(.85); transition: opacity .25s, transform .25s; box-shadow: 0 30px 60px rgba(0,0,0,.6); }
+  .m3-float.on { opacity: 1; }
+  .m3-float img, .m3-float .ph { width: 100%; height: 100%; object-fit: cover; font-size: 1.1rem; text-align: center; padding: 10px; }
+  .m3-float img { padding: 0; }
+  @media (hover: none) { .m3-float { display: none; } }
+
+  /* ---------- ABOUT B: манифест ---------- */
+  .a2 { text-align: center; }
+  .a2-text { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 4.2vw, 3.5rem); line-height: 1.18; max-width: 1100px; margin: 1.6rem auto 2.4rem; text-wrap: balance; }
+  .a2-text .pic { display: inline-block; height: .95em; width: 2em; border-radius: 99px; object-fit: cover; vertical-align: -.12em; margin: 0 .1em; }
+  .a2-text .hl { color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; }
+  .a2-facts { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .a2-facts span { padding: 10px 18px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--muted); font-size: .9rem; }
+  .a2-facts b { color: var(--text); }
+
+  /* ---------- ABOUT C: бенто ---------- */
+  .a3 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); grid-template-areas: "photo bio bio num" "photo quote tags num2"; gap: 12px; }
+  .a3 > * { border-radius: 22px; border: 1px solid var(--line); background: var(--card); padding: clamp(18px, 2.4vw, 28px); min-width: 0; }
+  .a3-photo { grid-area: photo; padding: 0; overflow: hidden; position: relative; min-height: 420px; }
+  .a3-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 10%; }
+  .a3-photo figcaption { position: absolute; left: 14px; bottom: 14px; padding: 6px 12px; border-radius: 99px; background: rgba(11,10,15,.7); font-size: .8rem; font-weight: 700; }
+  .a3-bio { grid-area: bio; }
+  .a3-bio h3 { font-family: var(--display); font-size: 1.4rem; margin-bottom: .8rem; }
+  .a3-bio p { color: #c9c5d6; }
+  .a3-num { grid-area: num; display: flex; flex-direction: column; justify-content: space-between; background: var(--grad); color: #0b0a0f; border: 0; }
+  .a3-num.alt { grid-area: num2; background: var(--bg2); color: var(--text); border: 1px solid var(--line); }
+  .a3-num b { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1; }
+  .a3-num span { font-weight: 700; font-size: .85rem; }
+  .a3-quote { grid-area: quote; font-family: var(--display); font-weight: 600; font-size: clamp(1rem, 1.6vw, 1.25rem); line-height: 1.35; }
+  .a3-quote cite { display: block; margin-top: .8rem; font-family: var(--body); font-style: normal; font-size: .8rem; color: var(--muted); }
+  .a3-tags { grid-area: tags; display: flex; flex-wrap: wrap; gap: 8px; align-content: flex-start; }
+  .a3-tags span { padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); font-size: .82rem; font-weight: 600; }
+
+  /* ---------- PHOTOS B: лента ---------- */
+  .p2-strip { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 10px; scrollbar-width: none; padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); scroll-padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); }
+  .p2-strip::-webkit-scrollbar { display: none; }
+  .p2-strip figure { flex: 0 0 clamp(230px, 27vw, 360px); scroll-snap-align: start; }
+  .p2-strip img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; cursor: zoom-in; }
+  .p2-strip figcaption { display: flex; justify-content: space-between; margin-top: 10px; font-size: .85rem; color: var(--muted); }
+  .p2-strip figcaption b { color: var(--text); }
+  .p2-arrows { display: flex; gap: 8px; }
+
+  /* ---------- PHOTOS C: полароиды ---------- */
+  .p3 { background: radial-gradient(70% 60% at 50% 40%, rgba(143,123,255,.12), transparent 70%), var(--bg2); }
+  .p3-board { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(16px, 3vw, 34px); padding: 10px 0 20px; }
+  .pol { position: relative; width: clamp(150px, 21vw, 250px); background: #fafafa; padding: 10px 10px 46px; border-radius: 3px; transform: rotate(var(--r)); box-shadow: 0 18px 40px rgba(0,0,0,.5); transition: transform .35s cubic-bezier(.2,.8,.2,1); cursor: zoom-in; }
+  .pol:hover { transform: rotate(0) scale(1.05); z-index: 2; }
+  .pol img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .pol figcaption { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font-family: 'Caveat', cursive; font-size: 1.45rem; color: #222; }
+  .pol::before { content: ''; position: absolute; top: -10px; left: 50%; width: 70px; height: 22px; transform: translateX(-50%) rotate(-3deg); background: rgba(253,224,71,.55); }
+
+  /* ---------- CONTACTS B: строки ---------- */
+  .c2-mail { display: inline-block; font-family: var(--display); font-weight: 600; font-size: clamp(1.2rem, 3.6vw, 2.6rem); text-decoration: none; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; word-break: break-all; }
+  .c2-sub { color: var(--muted); margin: .6rem 0 2.4rem; }
+  .c2-list { list-style: none; border-top: 1px solid var(--line); }
+  .c2-list a { display: grid; grid-template-columns: minmax(0,1fr) auto 40px; align-items: center; gap: 16px; padding: clamp(14px, 2.2vw, 26px) 0; border-bottom: 1px solid var(--line); text-decoration: none; transition: padding .3s; }
+  .c2-list .n { font-family: var(--display); font-weight: 800; font-size: clamp(1.6rem, 6vw, 4.4rem); line-height: 1; text-transform: uppercase; }
+  .c2-list .h { color: var(--muted); font-size: .9rem; }
+  .c2-list .ar { font-size: 1.4rem; color: var(--muted); transition: transform .3s; }
+  .c2-list a:hover { padding-left: 16px; }
+  .c2-list a:hover .n { color: transparent; background: var(--grad); -webkit-background-clip: text; background-clip: text; }
+  .c2-list a:hover .ar { transform: rotate(45deg); color: var(--text); }
+  .c2-list sup { font-size: .4em; color: var(--accent2); }
+
+  /* ---------- CONTACTS C: ссылки в профиле ---------- */
+  .c3 { background: radial-gradient(50% 60% at 50% 30%, rgba(214,38,63,.2), transparent 70%), radial-gradient(40% 40% at 80% 90%, rgba(143,123,255,.2), transparent 70%), var(--bg); }
+  .c3-card { max-width: 440px; margin: 0 auto; text-align: center; padding: clamp(24px, 4vw, 36px); border-radius: 32px; background: rgba(255,255,255,.04); border: 1px solid var(--line); backdrop-filter: blur(20px); }
+  .c3-ava { width: 112px; height: 112px; border-radius: 50%; object-fit: cover; object-position: 50% 12%; margin: 0 auto 1rem; border: 3px solid transparent; background: var(--grad) border-box; }
+  .c3-card h3 { font-family: var(--display); font-weight: 800; font-size: 1.6rem; text-transform: uppercase; }
+  .c3-card > p { color: var(--muted); font-size: .9rem; margin-bottom: 1.6rem; }
+  .c3-links { display: grid; gap: 10px; }
+  .c3-btn { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: var(--card-hover); border: 1px solid var(--line); text-decoration: none; font-weight: 700; transition: transform .2s, background .2s; }
+  .c3-btn:hover { transform: translateY(-2px); background: rgba(255,255,255,.1); }
+  .c3-btn svg { width: 20px; height: 20px; flex: none; }
+  .c3-btn span { flex: 1; text-align: left; }
+  .c3-btn small { color: var(--muted); font-weight: 500; }
+  .c3-btn.main { background: var(--grad); color: #0b0a0f; border: 0; }
+  .c3-mail { display: flex; align-items: center; gap: 8px; margin-top: 16px; padding: 6px 6px 6px 16px; border-radius: 99px; border: 1px dashed rgba(255,255,255,.25); }
+  .c3-mail span { flex: 1; min-width: 0; text-align: left; font-weight: 600; font-size: .9rem; overflow: hidden; text-overflow: ellipsis; user-select: all; }
+  .c3-mail button { padding: 8px 14px; border-radius: 99px; background: var(--text); color: var(--bg); font-weight: 700; font-size: .8rem; }
+  .c3-note { margin-top: 1rem; font-size: .72rem; color: var(--dim); }
+
+  @media (max-width: 960px) {
+    .m2-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .h3-grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+    .h3-vert { display: none; }
+    .a3 { grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-areas: "photo photo" "bio bio" "num num2" "quote quote" "tags tags"; }
+    .a3-photo { min-height: 380px; }
+  }
+  @media (max-width: 720px) {
+    .h2-stage { grid-template-columns: 1fr; justify-items: center; text-align: center; margin-top: 18px; }
+    .h2-side.r { justify-self: center; text-align: center; }
+    .h2-side p { margin: 0 auto; }
+    .h2-side.l { order: 2; }
+    .h2-photo { width: min(320px, 82vw); }
+    .h3-grid { grid-template-columns: 1fr; }
+    .h3-arch { width: min(300px, 80vw); }
+    .m2-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .m3-row { grid-template-columns: 30px minmax(0,1fr) 44px 28px; gap: 10px; }
+    .m3-row .meta { display: none; }
+    .c2-list .h { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#intro">Ameli <span>Vail</span></a>
+    <nav aria-label="Основное меню">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#music-a">Музыка</a></li>
+        <li><a href="#about-a">Об артистке</a></li>
+        <li><a href="#photos-a">Фото</a></li>
+        <li><a href="#contacts-a">Контакты</a></li>
+      </ul>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="age" title="Возрастная маркировка (436-ФЗ)">16+</span>
+      <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="intro" id="intro"><div class="wrap">
+<span class="eyebrow">Страница выбора дизайна</span>
+<h1>Ameli Vail — по 3 варианта каждого блока</h1>
+<p>Каждый блок сайта показан в трёх вариантах друг под другом: <b>A</b> — как сейчас, <b>B</b> и <b>C</b> — новые. Жёлтая плашка над каждым вариантом подписывает, что это. Выберите по одному варианту на каждый блок (например: «1B, 2A, 3C, 4B, 5C») — соберу из них итоговый сайт. Отрывки работают во всех вариантах; сейчас играет демо-звук, а не песни.</p>
+<div class="jump"><div><b>1. Главный экран</b><a href="#hero-a-label">A</a><a href="#hero-b-label">B</a><a href="#hero-c-label">C</a></div><div><b>2. Музыка</b><a href="#music-a-label">A</a><a href="#music-b-label">B</a><a href="#music-c-label">C</a></div><div><b>3. Об артистке</b><a href="#about-a-label">A</a><a href="#about-b-label">B</a><a href="#about-c-label">C</a></div><div><b>4. Фото</b><a href="#photos-a-label">A</a><a href="#photos-b-label">B</a><a href="#photos-c-label">C</a></div><div><b>5. Контакты</b><a href="#contacts-a-label">A</a><a href="#contacts-b-label">B</a><a href="#contacts-c-label">C</a></div></div></div></section>
+<div class="vlabel" id="hero-a-label"><span class="tag">БЛОК 1 · A</span><b>Главный экран — вариант A</b><span>Сейчас на сайте: тёмный фон, фото справа, имя слева, бегущая строка снизу</span></div>
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero-a" style="padding:0">
+  <div class="hero-photo">
+    <img src="assets/img/hero.jpg" alt="Ameli Vail — портрет" fetchpriority="high">
+  </div>
+  <div class="hero-glow"></div>
+  <div class="wrap hero-content">
+    <span class="eyebrow">Инди-поп · Россия</span>
+    <h1 class="hero-name">Ameli<span class="outline">Vail</span></h1>
+    <p class="hero-desc">Искренние тексты, атмосферный звук и живые эмоции. Нажми play — и послушай отрывок нового сингла прямо здесь.</p>
+
+    <div class="single-card" data-track-card="0">
+      <img src="assets/img/release-06.webp" alt="Обложка сингла «Сердце задышит»">
+      <div class="single-meta">
+        <small>Новый сингл</small>
+        <strong>Сердце задышит</strong>
+        <a href="https://band.link/amelivailserdtse" target="_blank" rel="noopener">Слушать полностью на площадках ↗</a>
+      </div>
+      <button class="play-btn" data-play="0" aria-label="Слушать отрывок «Сердце задышит»">
+        <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+      </button>
+    </div>
+  </div>
+  <a class="scroll-hint" href="#music-a">Листай вниз</a>
+</section>
+
+<!-- бегущая строка с названиями треков (заполняется из JS) -->
+<div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+<div class="vlabel" id="hero-b-label"><span class="tag">БЛОК 1 · B</span><b>Главный экран — вариант B</b><span>Журнальная обложка: светлый студийный фон, огромное имя в одну строку, фото перекрывает буквы</span></div>
+<section class="h2" id="hero-b">
+  <div class="wrap">
+    <div class="h2-top"><span>Инди-поп · Россия</span><span>Официальный сайт</span></div>
+    <h1 class="h2-name">Ameli Vail</h1>
+    <div class="h2-stage">
+      <div class="h2-side l">
+        <p>Искренние тексты, атмосферный звук и живые эмоции. Песни о том, что обычно не говорят вслух.</p>
+        <a class="more" href="#music-a">Вся музыка ↓</a>
+      </div>
+      <figure class="h2-photo"><img src="assets/img/hero.jpg" alt="Ameli Vail — портрет"></figure>
+      <div class="h2-side r">
+        <small>Новый сингл</small>
+        <strong>Сердце задышит</strong>
+        <button class="h2-play" data-play="0">
+          <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+          Отрывок 0:30
+        </button>
+        <a class="full" href="https://band.link/amelivailserdtse" target="_blank" rel="noopener">Слушать полностью ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="vlabel" id="hero-c-label"><span class="tag">БЛОК 1 · C</span><b>Главный экран — вариант C</b><span>Арка и винил: фото в арке, справа пластинка нового сингла — крутится, пока играет отрывок</span></div>
+<section class="h3" id="hero-c">
+  <div class="wrap h3-grid">
+    <div class="h3-vert" aria-hidden="true">Ameli Vail</div>
+    <figure class="h3-arch"><img src="assets/img/hero.jpg" alt="Ameli Vail — портрет"></figure>
+    <div>
+      <span class="eyebrow">Инди-поп · Россия</span>
+      <h1 class="h3-name">Ameli<br><em>Vail</em></h1>
+      <div class="vinyl" data-ti="0">
+        <div class="dw"><div class="disc"></div></div>
+        <div class="cov"><img src="assets/img/release-06.webp" alt="Обложка «Сердце задышит»"></div>
+      </div>
+      <div class="h3-meta">
+        <small>Новый сингл</small>
+        <strong>Сердце задышит</strong>
+      </div>
+      <div class="h3-actions">
+        <button class="play-btn" data-play="0" aria-label="Слушать отрывок">
+          <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+        </button>
+        <a class="btn btn-ghost" href="https://band.link/amelivailserdtse" target="_blank" rel="noopener">Слушать полностью ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="vlabel" id="music-a-label"><span class="tag">БЛОК 2 · A</span><b>Музыка — вариант A</b><span>Сейчас на сайте: большой плеер с волной + список треков</span></div>
+<!-- ================= MUSIC ================= -->
+<section id="music-a">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">Дискография</span>
+        <h2 class="sec-title">Послушай</h2>
+      </div>
+      <p class="sec-note">Каждый трек можно прослушать отрывком 30 секунд. Полные версии — на официальных музыкальных площадках.</p>
+    </div>
+
+    <div class="music-grid">
+      <!-- большой плеер -->
+      <div class="player reveal" id="player">
+        <div class="player-cover" id="pCover"></div>
+        <div class="player-info">
+          <div class="t">
+            <h3 id="pTitle">—</h3>
+            <p id="pSub">Ameli Vail</p>
+          </div>
+          <button class="play-btn" id="pPlay" aria-label="Воспроизвести отрывок">
+            <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
+            <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+          </button>
+        </div>
+        <div class="wave" id="wave" role="slider" aria-label="Позиция в отрывке" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0" tabindex="0">
+          <div class="wave-layer"></div>
+          <div class="wave-layer fill"></div>
+        </div>
+        <div class="times"><span id="tCur">0:00</span><span id="tDur">0:30</span></div>
+        <div class="player-actions">
+          <button class="icon-btn" id="pPrev" aria-label="Предыдущий трек"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+          <button class="icon-btn" id="pNext" aria-label="Следующий трек"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+          <a class="btn btn-primary" id="pLink" href="#" target="_blank" rel="noopener">
+            Слушать полностью
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </a>
+        </div>
+        <p class="legal-mini" id="pLegal"></p>
+      </div>
+
+      <!-- список треков -->
+      <ol class="tracks reveal" id="tracks" aria-label="Список треков"></ol>
+    </div>
+  </div>
+</section>
+
+<div class="vlabel" id="music-b-label"><span class="tag">БЛОК 2 · B</span><b>Музыка — вариант B</b><span>Сетка обложек: из-под обложки выезжает пластинка, кольцо прогресса на кнопке</span></div>
+<section id="music-b">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Дискография</span><h2 class="sec-title">Релизы</h2></div>
+      <p class="sec-note">Нажми кнопку на обложке — пластинка выедет и заиграет отрывок 30 сек. Кольцо на кнопке показывает прогресс.</p>
+    </div>
+    <div class="m2-grid" id="m2"></div>
+  </div>
+</section>
+<div class="vlabel" id="music-c-label"><span class="tag">БЛОК 2 · C</span><b>Музыка — вариант C</b><span>Типографика: огромные названия строками, при наведении за курсором плывёт обложка</span></div>
+<section id="music-c" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Дискография</span><h2 class="sec-title">Треклист</h2></div>
+      <p class="sec-note">Наведи на название — появится обложка. Нажми на строку — заиграет отрывок 30 сек.</p>
+    </div>
+    <ol class="m3-list" id="m3"></ol>
+  </div>
+  <div class="m3-float" id="m3float" aria-hidden="true"></div>
+</section>
+<div class="vlabel" id="about-a-label"><span class="tag">БЛОК 3 · A</span><b>Об артистке — вариант A</b><span>Сейчас на сайте: фото + текст + три факта</span></div>
+<!-- ================= ABOUT ================= -->
+<section id="about-a" style="background:var(--bg2)">
+  <div class="wrap about-grid">
+    <div class="about-photo reveal">
+      <img src="assets/img/release-06.webp" alt="Ameli Vail" loading="lazy" style="transform:scale(1.32);transform-origin:50% 100%">
+      <span class="tag">📍 Россия</span>
+    </div>
+    <div class="about-text reveal">
+      <span class="eyebrow">Об артистке</span>
+      <h2 class="sec-title" style="margin-bottom:1.6rem">Ameli Vail</h2>
+      <!-- ЗАГЛУШКА: заменить на настоящую биографию -->
+      <p class="lead">Песни о том, что обычно не говорят вслух: про одиночество в большом городе, первую зиму после расставания и умение идти дальше самой.</p>
+      <p>Ameli Vail пишет инди-поп на стыке уличной эстетики и нежной лирики. Её треки — это ночные прогулки по набережным, январский снег и честные разговоры с собой.</p>
+      <p>Каждый релиз — отдельная история со своим визуалом: от холодного неона «Звонит и молчит» до тёплого света «Сердце задышит».</p>
+      <div class="facts">
+        <div class="fact"><b id="factCount">12</b><span>синглов</span></div>
+        <div class="fact"><b>16+</b><span>возраст. маркировка</span></div>
+        <div class="fact"><b>RU</b><span>на русском языке</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="vlabel" id="about-b-label"><span class="tag">БЛОК 3 · B</span><b>Об артистке — вариант B</b><span>Манифест: одна большая фраза с круглыми фото прямо в строке</span></div>
+<section id="about-b" class="a2">
+  <div class="wrap">
+    <span class="eyebrow">Об артистке</span>
+    <p class="a2-text">
+      <span class="hl">Ameli Vail</span> <img class="pic" src="assets/img/hero.jpg" alt="" style="object-position:50% 15%"> пишет песни о том, что обычно не говорят вслух <img class="pic" src="assets/img/release-05.webp" alt=""> — про январский снег, ночные набережные <img class="pic" src="assets/img/release-01.webp" alt=""> и умение идти <span class="hl">дальше самой.</span>
+    </p>
+    <div class="a2-facts">
+      <span><b data-count>12</b> синглов</span>
+      <span><b>Инди-поп</b></span>
+      <span>на <b>русском</b></span>
+      <span><b>16+</b></span>
+    </div>
+  </div>
+</section>
+<div class="vlabel" id="about-c-label"><span class="tag">БЛОК 3 · C</span><b>Об артистке — вариант C</b><span>Бенто-плитки: фото, биография, цифры, цитата, теги</span></div>
+<section id="about-c" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="eyebrow">Об артистке</span><h2 class="sec-title">Кто она</h2></div></div>
+    <div class="a3">
+      <figure class="a3-photo"><img src="assets/img/hero.jpg" alt="Ameli Vail"><figcaption>Ameli Vail</figcaption></figure>
+      <div class="a3-bio">
+        <h3>Инди-поп с уличной эстетикой</h3>
+        <p>Ameli Vail пишет инди-поп на стыке уличной эстетики и нежной лирики. Каждый релиз — отдельная история со своим визуалом: от холодного неона «Звонит и молчит» до тёплого света «Сердце задышит».</p>
+      </div>
+      <div class="a3-num"><b data-count>12</b><span>синглов на всех площадках</span></div>
+      <div class="a3-num alt"><b>16+</b><span>возрастная маркировка</span></div>
+      <blockquote class="a3-quote">«Дальше я сама» — это не просто название песни, а способ жить.<cite>— цитата-заглушка, заменить</cite></blockquote>
+      <div class="a3-tags"><span>инди-поп</span><span>лирика</span><span>ночной город</span><span>на русском</span><span>синглы</span></div>
+    </div>
+  </div>
+</section>
+<div class="vlabel" id="photos-a-label"><span class="tag">БЛОК 4 · A</span><b>Фото — вариант A</b><span>Сейчас на сайте: сетка, одно большое + четыре маленьких</span></div>
+<!-- ================= PHOTOS ================= -->
+<section id="photos-a">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">Галерея</span>
+        <h2 class="sec-title">Фото</h2>
+      </div>
+      <p class="sec-note">Нажми на фото, чтобы открыть крупнее.</p>
+    </div>
+    <div class="gallery reveal" id="gallery">
+      <button aria-label="Открыть фото"><img src="assets/img/release-05.webp" alt="Ameli Vail — «Подруга января»" loading="lazy"></button>
+      <button aria-label="Открыть фото"><img src="assets/img/release-02.webp" alt="Ameli Vail — «Звонит и молчит»" loading="lazy"></button>
+      <button aria-label="Открыть фото"><img src="assets/img/release-01.webp" alt="Ameli Vail — «Дальше я сама»" loading="lazy"></button>
+      <button aria-label="Открыть фото"><img src="assets/img/release-03.webp" alt="Ameli Vail — «Дожди»" loading="lazy"></button>
+      <button aria-label="Открыть фото"><img src="assets/img/release-04.webp" alt="Ameli Vail" loading="lazy"></button>
+    </div>
+  </div>
+</section>
+
+<div class="vlabel" id="photos-b-label"><span class="tag">БЛОК 4 · B</span><b>Фото — вариант B</b><span>Лента: листается вбок пальцем или стрелками, подписи под фото</span></div>
+<section id="photos-b">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">Галерея</span><h2 class="sec-title">Фото</h2></div>
+      <div class="p2-arrows">
+        <button class="icon-btn" data-scroll="-1" aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="icon-btn" data-scroll="1" aria-label="Вперёд"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="p2-strip" id="p2" data-lb>
+    <figure><img src="assets/img/hero.jpg" alt="Ameli Vail" loading="lazy" style="object-position:50% 10%"><figcaption><b>Портрет</b><span>01</span></figcaption></figure>
+    <figure><img src="assets/img/release-05.webp" alt="Подруга января" loading="lazy"><figcaption><b>Подруга января</b><span>02</span></figcaption></figure>
+    <figure><img src="assets/img/release-02.webp" alt="Звонит и молчит" loading="lazy"><figcaption><b>Звонит и молчит</b><span>03</span></figcaption></figure>
+    <figure><img src="assets/img/release-04.webp" alt="Ameli Vail" loading="lazy"><figcaption><b>Сибирь</b><span>04</span></figcaption></figure>
+    <figure><img src="assets/img/release-01.webp" alt="Дальше я сама" loading="lazy"><figcaption><b>Дальше я сама</b><span>05</span></figcaption></figure>
+    <figure><img src="assets/img/release-03.webp" alt="Дожди" loading="lazy"><figcaption><b>Дожди</b><span>06</span></figcaption></figure>
+    <figure><img src="assets/img/release-06.webp" alt="Сердце задышит" loading="lazy"><figcaption><b>Сердце задышит</b><span>07</span></figcaption></figure>
+  </div>
+</section>
+<div class="vlabel" id="photos-c-label"><span class="tag">БЛОК 4 · C</span><b>Фото — вариант C</b><span>Полароиды: разбросанные снимки с подписями от руки, выпрямляются при наведении</span></div>
+<section id="photos-c" class="p3">
+  <div class="wrap">
+    <div class="sec-head"><div><span class="eyebrow">Галерея</span><h2 class="sec-title">Фото</h2></div><p class="sec-note">Нажми на снимок, чтобы открыть крупнее.</p></div>
+    <div class="p3-board" data-lb>
+      <figure class="pol" style="--r:-5deg"><img src="assets/img/hero.jpg" alt="Ameli Vail" loading="lazy" style="object-position:50% 12%"><figcaption>это я</figcaption></figure>
+      <figure class="pol" style="--r:3deg"><img src="assets/img/release-05.webp" alt="Подруга января" loading="lazy"><figcaption>январь ❄</figcaption></figure>
+      <figure class="pol" style="--r:-2deg"><img src="assets/img/release-02.webp" alt="Звонит и молчит" loading="lazy"><figcaption>звонит и молчит</figcaption></figure>
+      <figure class="pol" style="--r:4deg"><img src="assets/img/release-01.webp" alt="Дальше я сама" loading="lazy"><figcaption>дальше сама</figcaption></figure>
+      <figure class="pol" style="--r:-4deg"><img src="assets/img/release-04.webp" alt="Ameli Vail" loading="lazy"><figcaption>сибирь</figcaption></figure>
+      <figure class="pol" style="--r:2deg"><img src="assets/img/release-03.webp" alt="Дожди" loading="lazy"><figcaption>дожди</figcaption></figure>
+    </div>
+  </div>
+</section>
+<div class="vlabel" id="contacts-a-label"><span class="tag">БЛОК 5 · A</span><b>Контакты — вариант A</b><span>Сейчас на сайте: карточка букинга + плитки соцсетей</span></div>
+<!-- ================= CONTACTS ================= -->
+<section id="contacts-a">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">Связь</span>
+        <h2 class="sec-title">Контакты</h2>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="booking reveal">
+        <span class="eyebrow">Букинг и сотрудничество</span>
+        <h3>Концерты, коллабы, пресса</h3>
+        <p>Выступления, фиты, интервью и интеграции — пишите на почту, ответим в течение пары дней.</p>
+        <!-- ЗАГЛУШКА: заменить на реальную почту -->
+        <a class="mail" href="mailto:amelivail@mail.ru">amelivail@mail.ru</a>
+      </div>
+      <div class="socials reveal">
+        <a class="social" href="https://t.me/AMELIVAIL" target="_blank" rel="noopener">
+          <div class="top">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </div>
+          <div><b>Telegram</b><small>@AMELIVAIL</small></div>
+        </a>
+        <a class="social" href="https://vk.ru/aamelivail" target="_blank" rel="noopener">
+          <div class="top">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.032-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.491-.085.745-.576.745z"/></svg>
+            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </div>
+          <div><b>ВКонтакте</b><small>vk.ru/aamelivail</small></div>
+        </a>
+        <a class="social" href="https://youtube.com/@amelivail" target="_blank" rel="noopener">
+          <div class="top">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </div>
+          <div><b>YouTube</b><small>@amelivail</small></div>
+        </a>
+        <a class="social" href="https://www.tiktok.com/@amelivail" target="_blank" rel="noopener">
+          <div class="top">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </div>
+          <div><b>TikTok</b><small>@amelivail</small></div>
+        </a>
+        <a class="social" href="https://www.instagram.com/amelivail" target="_blank" rel="noopener" style="grid-column:1/-1">
+          <div class="top">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+          </div>
+          <div><b>Instagram<sup>*</sup></b><small>@amelivail · *см. примечание внизу страницы</small></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="vlabel" id="contacts-b-label"><span class="tag">БЛОК 5 · B</span><b>Контакты — вариант B</b><span>Огромные строки-ссылки на всю ширину, почта крупно сверху</span></div>
+<section id="contacts-b">
+  <div class="wrap">
+    <span class="eyebrow">Букинг · коллабы · пресса</span>
+    <div style="margin-top:1rem"><a class="c2-mail" href="mailto:amelivail@mail.ru">amelivail@mail.ru</a></div>
+    <p class="c2-sub">Концерты, фиты, интервью и интеграции — ответим в течение пары дней.</p>
+    <ul class="c2-list">
+      <li><a href="https://t.me/AMELIVAIL" target="_blank" rel="noopener"><span class="n">Telegram</span><span class="h">@AMELIVAIL</span><span class="ar">↗</span></a></li>
+      <li><a href="https://vk.ru/aamelivail" target="_blank" rel="noopener"><span class="n">ВКонтакте</span><span class="h">vk.ru/aamelivail</span><span class="ar">↗</span></a></li>
+      <li><a href="https://youtube.com/@amelivail" target="_blank" rel="noopener"><span class="n">YouTube</span><span class="h">@amelivail</span><span class="ar">↗</span></a></li>
+      <li><a href="https://www.tiktok.com/@amelivail" target="_blank" rel="noopener"><span class="n">TikTok</span><span class="h">@amelivail</span><span class="ar">↗</span></a></li>
+      <li><a href="https://www.instagram.com/amelivail" target="_blank" rel="noopener"><span class="n">Instagram<sup>*</sup></span><span class="h">@amelivail</span><span class="ar">↗</span></a></li>
+    </ul>
+  </div>
+</section>
+<div class="vlabel" id="contacts-c-label"><span class="tag">БЛОК 5 · C</span><b>Контакты — вариант C</b><span>Как «ссылки в профиле»: аватар, кнопки, почта с кнопкой «Копировать»</span></div>
+<section id="contacts-c" class="c3">
+  <div class="wrap">
+    <div class="c3-card">
+      <img class="c3-ava" src="assets/img/hero.jpg" alt="Ameli Vail">
+      <h3>Ameli Vail</h3>
+      <p>Инди-поп · Россия · 16+</p>
+      <div class="c3-links">
+        <a class="c3-btn main" href="https://band.link/amelivailserdtse" target="_blank" rel="noopener"><i data-icon="play"></i><span>Новый сингл «Сердце задышит»</span>↗</a>
+        <a class="c3-btn" href="https://t.me/AMELIVAIL" target="_blank" rel="noopener"><i data-icon="tg"></i><span>Telegram</span><small>@AMELIVAIL</small></a>
+        <a class="c3-btn" href="https://vk.ru/aamelivail" target="_blank" rel="noopener"><i data-icon="vk"></i><span>ВКонтакте</span><small>aamelivail</small></a>
+        <a class="c3-btn" href="https://youtube.com/@amelivail" target="_blank" rel="noopener"><i data-icon="yt"></i><span>YouTube</span><small>@amelivail</small></a>
+        <a class="c3-btn" href="https://www.tiktok.com/@amelivail" target="_blank" rel="noopener"><i data-icon="tt"></i><span>TikTok</span><small>@amelivail</small></a>
+        <a class="c3-btn" href="https://www.instagram.com/amelivail" target="_blank" rel="noopener"><i data-icon="ig"></i><span>Instagram*</span><small>@amelivail</small></a>
+      </div>
+      <div class="c3-mail"><span id="c3mail">amelivail@mail.ru</span><button id="c3copy">Копировать</button></div>
+      <p class="c3-note">Букинг, коллабы и пресса — пишите на почту.</p>
+    </div>
+  </div>
+</section>
+</main>
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="logo" href="#intro">Ameli <span>Vail</span></a>
+      <span>© 2026 Ameli Vail. Все права защищены. <span class="age">16+</span></span>
+    </div>
+    <div class="foot-legal">
+      <!-- ЗАГЛУШКИ в квадратных скобках — заполнить реальными данными -->
+      <p><b>Музыка.</b> ℗ и © [правообладатель фонограмм — артист / лейбл / дистрибьютор]. Фрагменты произведений (до 30 секунд) размещены правообладателем в ознакомительных целях. Копирование, скачивание и публичное использование без письменного разрешения правообладателя запрещены (ст. 1270, 1324 ГК РФ).</p>
+      <p><b>Фото и оформление.</b> Фотографии и обложки принадлежат их авторам и используются с их согласия. [Фото: имя фотографа].</p>
+      <p><b>*Instagram</b> — продукт компании Meta Platforms Inc., деятельность которой признана экстремистской и запрещена на территории Российской Федерации.</p>
+      <p><b>Персональные данные.</b> Сайт не собирает персональные данные, не использует формы и cookie-файлы для отслеживания. Шрифты загружаются с Google Fonts.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= STICKY MINI PLAYER ================= -->
+<div class="dock" id="dock" aria-live="polite">
+  <div id="dCover"></div>
+  <div class="t"><b id="dTitle">—</b><span id="dTime">0:00 / 0:30 · отрывок</span></div>
+  <button class="icon-btn" id="dNext" aria-label="Следующий трек"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg></button>
+  <button class="play-btn" id="dPlay" aria-label="Пауза / воспроизведение">
+    <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>
+    <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+  </button>
+  <button class="icon-btn" id="dClose" aria-label="Закрыть плеер"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <div class="bar"><i id="dBar"></i></div>
+</div>
+
+<!-- ================= LIGHTBOX ================= -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+  <button class="icon-btn close" id="lbClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <img id="lbImg" alt="">
+</div>
+
+<script>
+/* ТРЕКИ — те же данные, что и в index.html */
+const PREVIEW_SECONDS = 30;
+const tracks = [
+  { title: 'Все на ноль',         cover: 'assets/img/cover-vse-na-nol.webp', link: 'https://band.link/amelivaivsnanol', preview: 'assets/audio/vse-na-nol.mp3', start: 0, year: '2026', hue: 350 },
+  { title: 'Как горячий чай',     cover: 'assets/img/cover-kak-goryachiy-chay.webp', link: 'https://band.link/amelivailgoryachij', preview: 'assets/audio/kak-goryachiy-chay.mp3', start: 0, year: '2026', hue: 25 },
+  { title: 'Сердце задышит',      cover: 'assets/img/release-06.webp', link: 'https://band.link/amelivailserdtse',   preview: 'assets/audio/serdtse-zadyshit.mp3', start: 0, year: '2026', hue: 60  },
+  { title: 'Как током',           cover: 'assets/img/cover-kak-tokom.webp', link: 'https://band.link/amelivailkaktokom', preview: 'assets/audio/kak-tokom.mp3', start: 0, year: '2026', hue: 180 },
+  { title: 'Тоже есть крылья',    cover: 'assets/img/cover-tozhe-est-krylya.webp', link: 'https://band.link/amelitozhekrilya',  preview: 'assets/audio/tozhe-est-krylya.mp3', start: 0, year: '2026', hue: 280 },
+  { title: 'Дальше я сама',       cover: 'assets/img/release-01.webp', link: 'https://band.link/AfQFg',             preview: 'assets/audio/dalshe-ya-sama.mp3', start: 0, year: '2025', hue: 35  },
+  { title: 'Дожди',               cover: 'assets/img/release-03.webp', link: 'https://band.link/fDq7d',             preview: 'assets/audio/dozhdi.mp3', start: 0, year: '2025', hue: 20  },
+  { title: 'Стрела',              cover: 'assets/img/cover-strela.webp', link: 'https://band.link/nZ61n',             preview: 'assets/audio/strela.mp3', start: 0, year: '2025', hue: 340 },
+  { title: 'Лето без лести',      cover: 'assets/img/cover-leto-bez-lesti.webp', link: 'https://band.link/3jnEj',             preview: 'assets/audio/leto-bez-lesti.mp3', start: 0, year: '2025', hue: 45  },
+  { title: 'Пыль в глаза оружие', cover: 'assets/img/cover-pyl-v-glaza-oruzhie.webp', link: 'https://band.link/X2gzA',             preview: 'assets/audio/pyl-v-glaza-oruzhie.mp3', start: 0, year: '2025', hue: 150 },
+  { title: 'Звонит и молчит',     cover: 'assets/img/release-02.webp', link: 'https://band.link/R5mgU',             preview: 'assets/audio/zvonit-i-molchit.mp3', start: 0, year: '2025', hue: 245 },
+  { title: 'Кричать',             cover: 'assets/img/cover-krichat.webp', link: 'https://band.link/ihgh6',             preview: 'assets/audio/krichat.mp3', start: 0, year: '2025', hue: 0   },
+  { title: 'Подруга января',      cover: 'assets/img/release-05.webp', link: 'https://band.link/2A9Ij',             preview: 'assets/audio/podruga-yanvarya.mp3', start: 0, year: '2024', hue: 200 },
+  { title: 'Песни о любви',       cover: 'assets/img/cover-pesni-o-lyubvi.webp', link: 'https://band.link/lslh6',             preview: 'assets/audio/pesni-o-lyubvi.mp3', start: 0, year: '2024', hue: 320 },
+];
+
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+const fmt = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function seeded(seed) { let x = 0; for (const c of seed) x = (x * 31 + c.charCodeAt(0)) >>> 0; return () => ((x = (x * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function coverHTML(t, cls = '') {
+  if (t.cover) return `<img class="${cls}" src="${t.cover}" alt="Обложка «${esc(t.title)}»" loading="lazy">`;
+  const h = t.hue;
+  return `<div class="ph ${cls}" style="background:radial-gradient(120% 90% at 20% 10%,hsl(${h} 80% 62%),transparent 60%),radial-gradient(100% 100% at 90% 100%,hsl(${(h + 60) % 360} 70% 45%),transparent 60%),#15131c">${esc(t.title)}</div>`;
+}
+const ICON_PLAY = '<svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>';
+const ICON_PAUSE = '<svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+
+/* ---------- общие мелочи ---------- */
+{ const names = tracks.map(t => `<span>${esc(t.title)}</span>`).join(''); const m = $('#marquee'); if (m) m.innerHTML = names + names; }
+$$('#factCount, [data-count]').forEach(el => el.textContent = tracks.length);
+
+/* ---------- МУЗЫКА A: список ---------- */
+$('#tracks').innerHTML = tracks.map((t, i) => `
+  <li class="track" data-i="${i}" data-ti="${i}" data-play="${i}" tabindex="0" aria-label="Отрывок: ${esc(t.title)}">
+    <span class="num">${String(i + 1).padStart(2, '0')}</span>
+    <div class="cov">${coverHTML(t)}<div class="ov">${ICON_PLAY.replace('currentColor', '#fff')}${ICON_PAUSE.replace('currentColor', '#fff')}</div></div>
+    <div class="ttl"><b>${esc(t.title)}</b><span>Ameli Vail · Сингл${t.year ? ' · ' + t.year : ''}</span><div class="mini"><i></i></div></div>
+    <span class="dur">0:${PREVIEW_SECONDS}</span>
+    <a class="ext" href="${t.link}" target="_blank" rel="noopener" aria-label="Слушать «${esc(t.title)}» полностью" title="Слушать полностью">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17 17 7M8 7h9v9"/></svg>
+    </a>
+  </li>`).join('');
+
+/* ---------- МУЗЫКА B: сетка обложек ---------- */
+$('#m2').innerHTML = tracks.map((t, i) => `
+  <article class="m2-card" data-ti="${i}">
+    <div class="m2-art">
+      <div class="dw"><div class="disc"></div></div>
+      <div class="m2-cover">${coverHTML(t)}</div>
+      <button class="m2-play" data-play="${i}" aria-label="Отрывок «${esc(t.title)}»"><span>${ICON_PLAY}${ICON_PAUSE}</span></button>
+    </div>
+    <div class="m2-meta"><div><b>${esc(t.title)}</b><span>Сингл · 0:${PREVIEW_SECONDS}</span></div><a href="${t.link}" target="_blank" rel="noopener" title="Слушать полностью">↗</a></div>
+  </article>`).join('');
+
+/* ---------- МУЗЫКА C: типографический список ---------- */
+$('#m3').innerHTML = tracks.map((t, i) => `
+  <li class="m3-row" data-ti="${i}" data-play="${i}" tabindex="0" aria-label="Отрывок: ${esc(t.title)}">
+    <span class="n">${String(i + 1).padStart(2, '0')}</span>
+    <span class="t">${esc(t.title)}</span>
+    <span class="meta">отрывок 0:${PREVIEW_SECONDS}</span>
+    <span class="st">${ICON_PLAY}${ICON_PAUSE}</span>
+    <a href="${t.link}" target="_blank" rel="noopener" title="Слушать полностью">↗</a>
+    <i class="pr"></i>
+  </li>`).join('');
+{
+  const fl = $('#m3float'); let last = -1;
+  $('#m3').addEventListener('mousemove', e => {
+    const row = e.target.closest('.m3-row'); if (!row) return;
+    const i = +row.dataset.ti; if (i !== last) { fl.innerHTML = coverHTML(tracks[i]); last = i; }
+    fl.classList.add('on'); fl.style.left = (e.clientX + 130) + 'px'; fl.style.top = e.clientY + 'px';
+  });
+  $('#m3').addEventListener('mouseleave', () => fl.classList.remove('on'));
+  addEventListener('scroll', () => fl.classList.remove('on'), { passive: true });
+}
+
+/* ---------- волна для плеера A ---------- */
+function drawWave(t) {
+  const rnd = seeded(t.title), n = 64, bars = [];
+  for (let i = 0; i < n; i++) { const env = Math.sin(Math.PI * (i + .5) / n) * .5 + .5; bars.push(`<i style="height:${Math.round((.18 + rnd() * .82) * env * 100)}%"></i>`); }
+  $$('#wave .wave-layer').forEach(l => l.innerHTML = bars.join(''));
+}
+
+/* ---------- ДЕМО-ЗВУК (заглушка вместо настоящих отрывков) ---------- */
+const demoCache = new Map();
+async function renderDemo(t) {
+  if (demoCache.has(t.title)) return demoCache.get(t.title);
+  const sr = 22050, len = PREVIEW_SECONDS, ctx = new OfflineAudioContext(2, sr * len, sr);
+  const rnd = seeded(t.title + 'demo');
+  const bpm = 84 + Math.floor(rnd() * 36), beat = 60 / bpm, bar = beat * 4;
+  const root = 45 + Math.floor(rnd() * 7);
+  const progs = [[0, 8, 3, 10], [0, 5, 8, 7], [0, 10, 8, 3], [0, 3, 8, 10]];
+  const prog = progs[Math.floor(rnd() * progs.length)];
+  const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+  const master = ctx.createGain(); master.gain.value = .55;
+  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 2400;
+  master.connect(lp).connect(ctx.destination);
+  const dl = ctx.createDelay(1); dl.delayTime.value = beat * .75; const fb = ctx.createGain(); fb.gain.value = .32;
+  dl.connect(fb).connect(dl); dl.connect(master);
+  const note = (f, t0, dur, type, vol, dest = master) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.value = f;
+    g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(vol, t0 + Math.min(.08, dur / 4));
+    g.gain.setTargetAtTime(0, t0 + dur * .7, dur * .2);
+    o.connect(g); g.connect(dest); if (dest === master) g.connect(dl);
+    o.start(t0); o.stop(t0 + dur + .5);
+  };
+  const noiseBuf = ctx.createBuffer(1, sr * .2, sr); const nd = noiseBuf.getChannelData(0);
+  for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+  const hat = t0 => { const s = ctx.createBufferSource(), g = ctx.createGain(), hp = ctx.createBiquadFilter();
+    hp.type = 'highpass'; hp.frequency.value = 7000; s.buffer = noiseBuf;
+    g.gain.setValueAtTime(.12, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + .06);
+    s.connect(hp).connect(g).connect(master); s.start(t0); };
+  const kick = t0 => { const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.setValueAtTime(120, t0); o.frequency.exponentialRampToValueAtTime(40, t0 + .15);
+    g.gain.setValueAtTime(.9, t0); g.gain.exponentialRampToValueAtTime(.001, t0 + .35);
+    o.connect(g).connect(master); o.start(t0); o.stop(t0 + .4); };
+  const drumsFrom = bar * 2;
+  for (let b = 0, tt = 0; tt < len; b++, tt = b * bar) {
+    const r = root + prog[b % 4], minor = [0, 3, 7, 10, 14];
+    minor.slice(0, 4).forEach(iv => note(hz(r + 12 + iv), tt, bar, 'triangle', .07));
+    note(hz(r - 12), tt, beat * 1.5, 'sine', .35); note(hz(r - 12), tt + beat * 2.5, beat * 1.4, 'sine', .3);
+    for (let s = 0; s < 8; s++) if (rnd() > .35) note(hz(r + 24 + minor[Math.floor(rnd() * 5)]), tt + s * beat / 2, beat / 2, 'sine', .05);
+    if (tt >= drumsFrom) for (let k = 0; k < 4; k++) { if (k % 2 === 0) kick(tt + k * beat); hat(tt + k * beat + beat / 2); }
+  }
+  const buf = await ctx.startRendering();
+  const url = URL.createObjectURL(toWav(buf));
+  demoCache.set(t.title, url);
+  return url;
+}
+function toWav(buf) {
+  const ch = buf.numberOfChannels, n = buf.length, sr = buf.sampleRate, ab = new ArrayBuffer(44 + n * ch * 2), v = new DataView(ab);
+  const w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  w(0, 'RIFF'); v.setUint32(4, 36 + n * ch * 2, true); w(8, 'WAVEfmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true);
+  v.setUint16(22, ch, true); v.setUint32(24, sr, true); v.setUint32(28, sr * ch * 2, true); v.setUint16(32, ch * 2, true); v.setUint16(34, 16, true);
+  w(36, 'data'); v.setUint32(40, n * ch * 2, true);
+  const data = [...Array(ch)].map((_, c) => buf.getChannelData(c));
+  for (let i = 0, o = 44; i < n; i++) for (let c = 0; c < ch; c++, o += 2) {
+    const s = Math.max(-1, Math.min(1, data[c][i])); v.setInt16(o, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+  }
+  return new Blob([ab], { type: 'audio/wav' });
+}
+
+/* ---------- ПЛЕЕР: один звук на всю страницу, все варианты синхронно ---------- */
+const audio = new Audio();
+audio.preload = 'none';
+let cur = 0, playing = false, fadeTimer = null, fadingOut = false;
+
+function setTrack(i) {
+  cur = (i + tracks.length) % tracks.length;
+  const t = tracks[cur];
+  $('#pCover').innerHTML = coverHTML(t) + `<span class="badge">Отрывок · 0:${PREVIEW_SECONDS}</span><div class="eq"><i></i><i></i><i></i><i></i></div>`;
+  $('#pTitle').textContent = t.title;
+  $('#pSub').textContent = 'Ameli Vail · Сингл' + (t.year ? ' · ' + t.year : '');
+  $('#pLink').href = t.link;
+  $('#pLegal').textContent = t.preview
+    ? `Фрагмент ${PREVIEW_SECONDS} сек. © Ameli Vail. Размещён правообладателем для ознакомления.`
+    : 'Сейчас звучит демо-звук (заглушка), а не песня. Замените на отрывок в массиве tracks → preview.';
+  $('#dCover').innerHTML = coverHTML(t);
+  $('#dTitle').textContent = t.title;
+  drawWave(t);
+  $$('[data-ti]').forEach(el => el.style.setProperty('--p', '0%'));
+  syncUI();
+  updateProgress(0);
+}
+function fadeTo(target, ms, done) {
+  clearInterval(fadeTimer);
+  const from = audio.volume, steps = Math.max(1, ms / 30); let k = 0;
+  fadeTimer = setInterval(() => {
+    k++; audio.volume = Math.min(1, Math.max(0, from + (target - from) * (k / steps)));
+    if (k >= steps) { clearInterval(fadeTimer); done && done(); }
+  }, 30);
+}
+async function play(i) {
+  if (i !== undefined && i !== cur) { stop(true); setTrack(i); }
+  const t = tracks[cur];
+  setLoading(true);
+  try {
+    const src = t.preview || await renderDemo(t);
+    if (audio.dataset.src !== src) { audio.src = src; audio.dataset.src = src; audio.currentTime = t.start; }
+    audio.volume = 0; fadingOut = false;
+    await audio.play();
+    fadeTo(1, 600);
+    playing = true;
+  } catch (err) { console.warn('Не удалось воспроизвести отрывок', err); playing = false; }
+  setLoading(false);
+  syncUI();
+  $('#dock').classList.add('show');
+}
+function pause() { fadeTo(0, 250, () => audio.pause()); playing = false; syncUI(); }
+function stop(silent) {
+  clearInterval(fadeTimer); audio.pause(); playing = false;
+  if (audio.dataset.src) audio.currentTime = tracks[cur].start;
+  updateProgress(0); if (!silent) syncUI();
+}
+function toggle(i) { (i === undefined || i === cur) && playing ? pause() : play(i === undefined ? cur : i); }
+function elapsed() { return Math.max(0, audio.currentTime - tracks[cur].start); }
+audio.addEventListener('timeupdate', () => {
+  const e = elapsed();
+  if (playing && e >= PREVIEW_SECONDS - 1.2 && !fadingOut) { fadingOut = true; fadeTo(0, 1100); }
+  if (e >= PREVIEW_SECONDS) { stop(); next(true); return; }
+  updateProgress(e);
+});
+audio.addEventListener('ended', () => { stop(); next(true); });
+function next(auto) { const n = cur + 1; if (auto && n >= tracks.length) { setTrack(0); return; } play(n % tracks.length); }
+function prev() { play((cur - 1 + tracks.length) % tracks.length); }
+
+function updateProgress(e) {
+  const p = Math.min(100, e / PREVIEW_SECONDS * 100) + '%';
+  $('#wave').style.setProperty('--p', p);
+  $('#wave').setAttribute('aria-valuenow', Math.floor(e));
+  $('#tCur').textContent = fmt(e);
+  $('#dTime').textContent = `${fmt(e)} / ${fmt(PREVIEW_SECONDS)} · отрывок`;
+  $('#dBar').style.width = p;
+  $$(`[data-ti="${cur}"]`).forEach(el => el.style.setProperty('--p', p));
+}
+function setLoading(on) { $$(`#pPlay, #dPlay, [data-play="${cur}"]`).forEach(b => b.classList.toggle('is-loading', on)); }
+function syncUI() {
+  $('#player').classList.toggle('is-playing', playing);
+  $('#pPlay').classList.toggle('is-playing', playing);
+  $('#dPlay').classList.toggle('is-playing', playing);
+  $$('[data-ti]').forEach(el => { const on = +el.dataset.ti === cur; el.classList.toggle('active', on); el.classList.toggle('is-playing', on && playing); });
+  $$('[data-play]').forEach(el => el.classList.toggle('is-playing', playing && +el.dataset.play === cur));
+  if ('mediaSession' in navigator) {
+    const t = tracks[cur];
+    navigator.mediaSession.metadata = new MediaMetadata({ title: t.title + ' (отрывок)', artist: 'Ameli Vail', artwork: t.cover ? [{ src: t.cover, sizes: '512x512' }] : [] });
+    navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
+  }
+}
+
+/* любой элемент с data-play запускает свой трек */
+document.addEventListener('click', e => {
+  if (e.target.closest('a')) return;
+  const el = e.target.closest('[data-play]'); if (el) toggle(+el.dataset.play);
+});
+document.addEventListener('keydown', e => {
+  const el = e.target.closest && e.target.closest('li[data-play]');
+  if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); toggle(+el.dataset.play); }
+});
+
+function seekFromEvent(ev) {
+  if (!audio.dataset.src) return;
+  const r = $('#wave').getBoundingClientRect();
+  const x = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width));
+  audio.currentTime = tracks[cur].start + x * (PREVIEW_SECONDS - 1.5);
+  updateProgress(elapsed());
+}
+$('#wave').addEventListener('click', e => { if (!audio.dataset.src) play().then(() => seekFromEvent(e)); else seekFromEvent(e); });
+$('#pPlay').onclick = () => toggle();
+$('#dPlay').onclick = () => toggle();
+$('#pNext').onclick = $('#dNext').onclick = () => play(cur + 1);
+$('#pPrev').onclick = prev;
+$('#dClose').onclick = () => { stop(); $('#dock').classList.remove('show'); };
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.setActionHandler('play', () => play());
+  navigator.mediaSession.setActionHandler('pause', pause);
+  navigator.mediaSession.setActionHandler('nexttrack', () => play(cur + 1));
+  navigator.mediaSession.setActionHandler('previoustrack', prev);
+}
+['#player', '#dock', '#tracks', '#m2', '#m3'].forEach(s => $(s).addEventListener('contextmenu', e => e.preventDefault()));
+setTrack(0);
+new IntersectionObserver(([e]) => $('#dock').classList.toggle('hidden-by-player', e.isIntersecting), { threshold: .35 }).observe($('#player'));
+
+/* ---------- иконки соцсетей для варианта контактов C ---------- */
+const ICONS = {
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>',
+  tg: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>',
+  vk: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.032-1-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.44 0 .61.203.78.677.864 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.373 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.762-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.491-.085.745-.576.745z"/></svg>',
+  yt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
+  tt: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>',
+  ig: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
+};
+$$('[data-icon]').forEach(el => el.outerHTML = ICONS[el.dataset.icon] || '');
+
+$('#c3copy').onclick = async () => {
+  const text = $('#c3mail').textContent;
+  try { await navigator.clipboard.writeText(text); $('#c3copy').textContent = 'Скопировано'; }
+  catch { const r = document.createRange(); r.selectNodeContents($('#c3mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $('#c3copy').textContent = 'Выделено — Ctrl+C'; }
+  setTimeout(() => $('#c3copy').textContent = 'Копировать', 2200);
+};
+
+/* ---------- фото: лента B ---------- */
+$$('[data-scroll]').forEach(b => b.onclick = () => { const s = $('#p2'); s.scrollBy({ left: +b.dataset.scroll * s.clientWidth * .8, behavior: 'smooth' }); });
+
+/* ---------- nav / burger / lightbox ---------- */
+const nav = $('#nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 30), { passive: true });
+$('#burger').onclick = () => { const o = $('#navLinks').classList.toggle('open'); $('#burger').setAttribute('aria-expanded', o); };
+$$('.nav-links a').forEach(a => a.onclick = () => $('#navLinks').classList.remove('open'));
+
+const lb = $('#lightbox');
+document.addEventListener('click', e => {
+  const img = e.target.closest('#gallery button, [data-lb] figure')?.querySelector('img'); if (!img) return;
+  $('#lbImg').src = img.src; $('#lbImg').alt = img.alt; lb.classList.add('open'); $('#lbClose').focus();
+});
+lb.addEventListener('click', e => { if (e.target !== $('#lbImg')) lb.classList.remove('open'); });
+addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+</script>
+
+</body>
+</html>
