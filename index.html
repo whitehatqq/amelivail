@@ -721,7 +721,29 @@ $('#c3copy').onclick = async () => {
 };
 
 /* ---------- фото: лента, стрелки ---------- */
-$$('[data-scroll]').forEach(b => b.onclick = () => { const s = $('#p2'); s.scrollBy({ left: +b.dataset.scroll * s.clientWidth * .8, behavior: 'smooth' }); });
+/* Бесконечная лента: набор фото повторён слева и справа. Когда прокрутка
+   уходит в копию, лента незаметно перескакивает на тот же кадр в середине —
+   поэтому листать можно сколько угодно в обе стороны (пальцем и стрелками). */
+{
+  const strip = $('#p2'), orig = [...strip.children];
+  const clones = () => orig.map(f => { const c = f.cloneNode(true); c.setAttribute('aria-hidden', 'true'); return c; });
+  const x = el => el.getBoundingClientRect().left;
+  let step = 0;
+  const measure = () => { step = x(orig[0]) - x(strip.firstElementChild); };
+  const shift = d => { strip.style.scrollSnapType = 'none'; strip.style.scrollBehavior = 'auto'; strip.scrollLeft += d; void strip.offsetWidth; strip.style.scrollSnapType = ''; strip.style.scrollBehavior = ''; };
+  const normalize = () => { if (strip.scrollLeft < step * .5) shift(step); else if (strip.scrollLeft > step * 1.5) shift(-step); };
+  if (orig.length > 1) {
+    strip.prepend(...clones()); strip.append(...clones());
+    measure(); shift(step);
+    let t; strip.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(normalize, 140); }, { passive: true });
+    addEventListener('resize', () => { const k = step ? strip.scrollLeft / step : 1; measure(); shift(k * step - strip.scrollLeft); });
+  }
+  $$('[data-scroll]').forEach(b => b.onclick = () => {
+    normalize();
+    const f = orig[0], w = f.getBoundingClientRect().width + parseFloat(getComputedStyle(strip).columnGap || 16);
+    strip.scrollBy({ left: +b.dataset.scroll * w, behavior: 'smooth' });
+  });
+}
 
 /* ---------- nav / burger / lightbox ---------- */
 const nav = $('#nav');
