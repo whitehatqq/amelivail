@@ -215,14 +215,29 @@
   .wave-layer.fill { clip-path: inset(0 calc(100% - var(--p)) 0 0); }
   .wave-layer.fill i { background: var(--accent); }
   /* пульс волны во время игры: столбики «дышат» волной слева направо в ритме свечения */
-  .wave-layer i { transform-origin: center; }
-  .player.is-playing .wave-layer i { animation: barPulse 1.8s ease-in-out infinite; animation-delay: calc(var(--k) * -28ms); }
-  @keyframes barPulse { 0%, 100% { transform: scaleY(.78); } 12% { transform: scaleY(1.18); } 24% { transform: scaleY(.9); } 38% { transform: scaleY(1.08); } 60% { transform: scaleY(.82); } }
-  /* бегунок — светящаяся линия текущей позиции */
-  .wave::after { content: ''; position: absolute; top: 4px; bottom: 4px; left: var(--p); width: 2px; margin-left: -1px; border-radius: 2px; background: var(--accent); box-shadow: 0 0 10px 2px rgba(223,38,64,.55); opacity: 0; transition: opacity .4s; pointer-events: none; }
-  .player.is-playing .wave::after { opacity: 1; animation: headPulse 1.8s ease-in-out infinite; }
-  @keyframes headPulse { 0%, 100% { box-shadow: 0 0 6px 1px rgba(223,38,64,.4); } 12% { box-shadow: 0 0 16px 4px rgba(223,38,64,.8); } 38% { box-shadow: 0 0 12px 3px rgba(223,38,64,.6); } }
-  @media (prefers-reduced-motion: reduce) { .player.is-playing .wave-layer i { animation: none !important; } }
+  /* Пульс волны: столбики «дышат» всегда, а сила --wamp плавно растёт при старте (0→1)
+     и затухает на паузе — поэтому включение/выключение без рывков. */
+  @property --wamp { syntax: '<number>'; inherits: true; initial-value: 0; }
+  .wave { --wamp: 0; transition: --wamp .9s ease; }
+  .player.is-playing .wave { --wamp: 1; }
+  .wave-layer i { transform-origin: center; transition: height .5s cubic-bezier(.4,0,.2,1);
+    animation: barPulse 1.8s ease-in-out infinite; animation-delay: calc(var(--k) * -28ms); }
+  @keyframes barPulse {
+    0%, 100% { transform: scaleY(calc(1 - var(--wamp) * .22)); }
+    12%      { transform: scaleY(calc(1 + var(--wamp) * .18)); }
+    24%      { transform: scaleY(calc(1 - var(--wamp) * .1)); }
+    38%      { transform: scaleY(calc(1 + var(--wamp) * .08)); }
+    60%      { transform: scaleY(calc(1 - var(--wamp) * .18)); }
+  }
+  /* бегунок — светящаяся линия текущей позиции, плавно появляется и гаснет */
+  .wave::after { content: ''; position: absolute; top: 4px; bottom: 4px; left: var(--p); width: 2px; margin-left: -1px; border-radius: 2px; background: var(--accent);
+    opacity: calc(var(--wamp)); pointer-events: none; animation: headPulse 1.8s ease-in-out infinite; }
+  @keyframes headPulse {
+    0%, 100% { box-shadow: 0 0 calc(6px * var(--wamp)) calc(1px * var(--wamp)) rgba(223,38,64,.4); }
+    12%      { box-shadow: 0 0 calc(16px * var(--wamp)) calc(4px * var(--wamp)) rgba(223,38,64,.8); }
+    38%      { box-shadow: 0 0 calc(12px * var(--wamp)) calc(3px * var(--wamp)) rgba(223,38,64,.6); }
+  }
+  @media (prefers-reduced-motion: reduce) { .wave-layer i { animation: none !important; } }
   .times { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: .5rem; }
   .player-actions { display: flex; gap: .6rem; margin-top: 1.2rem; flex-wrap: wrap; }
   .legal-mini { margin-top: 1.1rem; font-size: .74rem; line-height: 1.5; color: var(--dim); }
@@ -649,7 +664,11 @@ $('#tracks').innerHTML = tracks.map((t, i) => `
 function drawWave(t) {
   const rnd = seeded(t.title), n = 64, bars = [];
   for (let i = 0; i < n; i++) { const env = Math.sin(Math.PI * (i + .5) / n) * .5 + .5; bars.push(`<i style="height:${Math.round((.18 + rnd() * .82) * env * 100)}%;--k:${i}"></i>`); }
-  $$('#wave .wave-layer').forEach(l => l.innerHTML = bars.join(''));
+  const hs = bars.map(b => b.match(/height:(\d+)%/)[1]);
+  $$('#wave .wave-layer').forEach(l => {
+    if (l.children.length === n) [...l.children].forEach((el, i) => el.style.height = hs[i] + '%');   // плавно перетекают
+    else l.innerHTML = bars.join('');
+  });
 }
 
 /* ---------- ПЛЕЕР: один звук на всю страницу ---------- */
@@ -769,8 +788,21 @@ function prev() { play((cur - 1 + tracks.length) % tracks.length); }
 /* настоящая длина отрывка: 30 сек или меньше, если файл короче */
 function clipLen() { const d = audio.duration - tracks[cur].start; return isFinite(d) && d > 0 && d < PREVIEW_SECONDS ? d : PREVIEW_SECONDS; }
 audio.addEventListener('loadedmetadata', () => { $('#tDur').textContent = fmt(clipLen()); updateProgress(elapsed()); });
+/* Прогресс: при заметном откате назад (остановка, смена трека, перемотка) заливка
+   не прыгает, а за 0,45 с плавно едет к новой позиции — даже если трек уже играет. */
+let shownP = 0, pTween = null;
 function updateProgress(e) {
-  const L = clipLen(), p = Math.min(100, e / L * 100) + '%';
+  const L = clipLen(), pn = Math.min(100, e / L * 100);
+  if (pn < shownP - 2 && !pTween) pTween = { from: shownP, t0: performance.now() };
+  let v = pn;
+  if (pTween) {
+    const k = Math.min(1, (performance.now() - pTween.t0) / 450);
+    v = pTween.from + (pn - pTween.from) * (1 - Math.pow(1 - k, 3));
+    if (k >= 1) pTween = null;
+    else if (!pTween.raf) pTween.raf = requestAnimationFrame(() => { if (pTween) pTween.raf = 0; updateProgress(elapsed()); });
+  }
+  shownP = v;
+  const p = v + '%';
   $('#wave').style.setProperty('--p', p);
   $('#wave').setAttribute('aria-valuenow', Math.floor(e));
   $('#tCur').textContent = fmt(e);
