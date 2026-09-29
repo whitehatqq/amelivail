@@ -104,11 +104,15 @@
   /* ---------- ГЛАВНЫЙ ЭКРАН: журнальная обложка ---------- */
   .h2 { background: var(--bg); color: var(--ink); padding: 110px 0 0; overflow: hidden; position: relative; isolation: isolate; }
   /* пульсирующее красное свечение за фигурой, пока играет отрывок */
-  .h2::before, .h2::after { content: ''; position: absolute; left: 50%; bottom: -10%; z-index: -1; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 1.2s ease; transform: translateX(-50%); }
-  .h2::before { width: min(1100px, 130vw); aspect-ratio: 1; background: radial-gradient(circle, rgba(223,38,64,.7) 0%, rgba(223,38,64,.3) 35%, rgba(255,106,61,.1) 55%, transparent 70%); }
-  .h2::after { width: min(620px, 90vw); aspect-ratio: 1; bottom: 5%; background: radial-gradient(circle, rgba(255,70,90,.5) 0%, transparent 65%); filter: blur(10px); }
-  .h2.is-live::before { opacity: 1; animation: heroPulse 1.8s ease-in-out infinite; }
-  .h2.is-live::after { opacity: 1; animation: heroPulse 1.8s ease-in-out infinite .15s; }
+  /* Свечение: внешний слой .h2-glow плавно проявляется/гаснет, внутренние <i> пульсируют всегда —
+     поэтому включение и выключение идут мягко, без скачков яркости */
+  .h2-glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 1.8s cubic-bezier(.4,0,.2,1); }
+  .h2.is-live .h2-glow { opacity: 1; transition-duration: 1.2s; }
+  .h2-glow i { position: absolute; left: 50%; bottom: -10%; border-radius: 50%; transform: translateX(-50%); animation: heroPulse 1.8s ease-in-out infinite; }
+  .h2-glow i:first-child { width: min(1100px, 130vw); aspect-ratio: 1; background: radial-gradient(circle, rgba(223,38,64,.7) 0%, rgba(223,38,64,.3) 35%, rgba(255,106,61,.1) 55%, transparent 70%); }
+  .h2-glow i:last-child { width: min(620px, 90vw); aspect-ratio: 1; bottom: 5%; background: radial-gradient(circle, rgba(255,70,90,.5) 0%, transparent 65%); filter: blur(10px); animation-delay: .15s; }
+  .h2:not(.is-live) .h2-glow:not(.fading) i { animation-play-state: paused; }
+
   @keyframes heroPulse {
     0%, 100% { transform: translateX(-50%) scale(.82); opacity: .35; }
     12%      { transform: translateX(-50%) scale(1.12); opacity: 1; }
@@ -119,7 +123,9 @@
   /* при «уменьшении движения» в настройках устройства — только мерцание яркостью, без движения */
   @keyframes heroGlow { 0%, 100% { opacity: .35; } 15% { opacity: 1; } 40% { opacity: .8; } }
   @media (prefers-reduced-motion: reduce) {
-    .h2.is-live::before, .h2.is-live::after { animation: heroGlow 1.8s ease-in-out infinite !important; transition: opacity 1.2s ease !important; }
+    .h2-glow { transition: opacity 1.8s cubic-bezier(.4,0,.2,1) !important; }
+    .h2.is-live .h2-glow { transition-duration: 1.2s !important; }
+    .h2-glow i { animation-name: heroGlow !important; animation-duration: 1.8s !important; animation-iteration-count: infinite !important; }
   }
   .h2-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 12px; }
   .h2-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 10.6vw; line-height: .85; letter-spacing: -.045em; text-align: center; white-space: nowrap; margin: 2.2rem 0 0; position: relative; z-index: 2; pointer-events: none; }
@@ -308,8 +314,8 @@
     .h2-side.r { justify-self: center; text-align: center; }
     .h2-side p { margin: 0 auto; }
     .h2-side.l { order: 2; }
-    .h2::before { bottom: auto; top: 18%; width: 150vw; }
-    .h2::after { bottom: auto; top: 30%; width: 110vw; }
+    .h2-glow i:first-child { bottom: auto; top: 18%; width: 150vw; }
+    .h2-glow i:last-child { bottom: auto; top: 30%; width: 110vw; }
     .h2-photo { width: min(360px, 88vw); -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%); mask-image: linear-gradient(180deg, #000 78%, transparent 100%); }
     .h2-side { padding-bottom: 0; }
     .h2-side.r { padding-bottom: 48px; }
@@ -351,6 +357,7 @@
 
 <!-- ================= ГЛАВНЫЙ ЭКРАН ================= -->
 <section class="h2" id="hero">
+  <div class="h2-glow" aria-hidden="true"><i></i><i></i></div>
   <div class="wrap">
     <div class="h2-top"><span>Инди-поп · Россия</span><span>Официальный сайт</span></div>
     <h1 class="h2-name">Ameli Vail</h1>
@@ -685,7 +692,9 @@ function updateProgress(e) {
 }
 function setLoading(on) { $$(`#pPlay, #dPlay, [data-play="${cur}"]`).forEach(b => b.classList.toggle('is-loading', on)); }
 function syncUI() {
-  $('#hero').classList.toggle('is-live', playing);
+  { const h = $('#hero'), g = h.querySelector('.h2-glow'), was = h.classList.contains('is-live');
+    h.classList.toggle('is-live', playing);
+    if (was && !playing) { g.classList.add('fading'); clearTimeout(g._t); g._t = setTimeout(() => g.classList.remove('fading'), 1900); } }
   $('#player').classList.toggle('is-playing', playing);
   $('#pPlay').classList.toggle('is-playing', playing);
   $('#dPlay').classList.toggle('is-playing', playing);
