@@ -153,6 +153,11 @@
   .player-cover { position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; background: var(--bg2); }
   .player-cover img, .player-cover .ph { width: 100%; height: 100%; object-fit: cover; }
   .player-cover .badge { position: absolute; top: 12px; left: 12px; padding: 5px 10px; border-radius: 99px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(20,17,23,.72); color: #fff; backdrop-filter: blur(8px); }
+  .player-cover .badge { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; transition: background .2s; }
+  .player-cover .badge:hover { background: var(--accent); }
+  .player-cover .badge svg { width: 11px; height: 11px; }
+  .player-cover .badge .i-pause, .player.is-playing .badge .i-play { display: none; }
+  .player.is-playing .badge .i-pause { display: block; }
   .eq { position: absolute; right: 14px; bottom: 14px; display: flex; gap: 3px; align-items: end; height: 22px; opacity: 0; transition: opacity .3s; }
   .eq i { width: 4px; background: #fff; border-radius: 2px; animation: eq 1s ease-in-out infinite; box-shadow: 0 0 6px rgba(0,0,0,.4); }
   .eq i:nth-child(2) { animation-delay: -.3s } .eq i:nth-child(3) { animation-delay: -.6s } .eq i:nth-child(4) { animation-delay: -.15s }
@@ -620,7 +625,7 @@ function setTrack(i) {
   cur = (i + tracks.length) % tracks.length;
   if (cur >= VISIBLE_TRACKS) expandTracks(true);
   const t = tracks[cur];
-  $('#pCover').innerHTML = coverHTML(t) + `<span class="badge">Отрывок · 0:${PREVIEW_SECONDS}</span><div class="eq"><i></i><i></i><i></i><i></i></div>`;
+  $('#pCover').innerHTML = coverHTML(t) + `<button class="badge" id="pBadge" type="button"><svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg><svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg><span>Слушать</span></button><div class="eq"><i></i><i></i><i></i><i></i></div>`;
   $('#pTitle').textContent = t.title;
   $('#pSub').textContent = 'Ameli Vail · Сингл' + (t.year ? ' · ' + t.year : '');
   $('#pLink').href = t.link;
@@ -696,6 +701,7 @@ function syncUI() {
     h.classList.toggle('is-live', playing);
     if (was && !playing) { g.classList.add('fading'); clearTimeout(g._t); g._t = setTimeout(() => g.classList.remove('fading'), 1900); } }
   $('#player').classList.toggle('is-playing', playing);
+  const pb = $('#pBadge span'); if (pb) pb.textContent = playing ? 'Пауза' : 'Слушать';
   $('#pPlay').classList.toggle('is-playing', playing);
   $('#dPlay').classList.toggle('is-playing', playing);
   $$('[data-ti]').forEach(el => { const on = +el.dataset.ti === cur; el.classList.toggle('active', on); el.classList.toggle('is-playing', on && playing); });
@@ -726,6 +732,7 @@ function seekFromEvent(ev) {
 }
 $('#wave').addEventListener('click', e => { if (!audio.dataset.src) play().then(() => seekFromEvent(e)); else seekFromEvent(e); });
 $('#pPlay').onclick = () => toggle();
+$('#pCover').addEventListener('click', e => { if (e.target.closest('#pBadge')) toggle(); });
 $('#dPlay').onclick = () => toggle();
 $('#pNext').onclick = $('#dNext').onclick = () => play(cur + 1);
 $('#pPrev').onclick = prev;
