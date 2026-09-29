@@ -214,6 +214,11 @@
   .p2-strip figure { flex: 0 0 clamp(230px, 27vw, 360px); scroll-snap-align: start; }
   .p2-strip img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; cursor: zoom-in; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
   .p2-strip figure:hover img { transform: scale(1.02); }
+  /* перетаскивание мышью: курсор-рука, во время протяжки без прилипания и выделения */
+  @media (hover: hover) and (pointer: fine) { .p2-strip, .p2-strip img { cursor: grab; } }
+  .p2-strip.dragging, .p2-strip.dragging img { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+  .p2-strip.dragging figure:hover img { transform: none; }
+  .p2-strip img { -webkit-user-drag: none; user-select: none; }
 
   /* ---------- КОНТАКТЫ: ссылки в профиле ---------- */
   .c3 { background: radial-gradient(50% 60% at 50% 30%, rgba(212,38,63,.14), transparent 70%), var(--bg); }
@@ -741,6 +746,40 @@ $('#c3copy').onclick = async () => {
     let t; strip.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(normalize, 140); }, { passive: true });
     addEventListener('resize', () => { const k = step ? strip.scrollLeft / step : 1; measure(); shift(k * step - strip.scrollLeft); });
   }
+  /* Листание зажатой мышью (на телефоне работает родной свайп). Двигаем
+     прокрутку на разницу с прошлым шагом, поэтому незаметные «перескоки»
+     бесконечной ленты во время протяжки ничего не ломают. После отпускания —
+     инерция, затем лента мягко встаёт на ближайшее фото. */
+  let drag = null, raf = 0;
+  const release = () => { strip.classList.remove('dragging'); strip.style.scrollSnapType = ''; normalize(); };
+  strip.addEventListener('dragstart', e => e.preventDefault());
+  strip.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    cancelAnimationFrame(raf);
+    drag = { x: e.clientX, moved: 0, v: 0, t: performance.now() };
+  });
+  addEventListener('pointermove', e => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, now = performance.now();
+    drag.moved += Math.abs(dx);
+    if (drag.moved > 6 && !strip.classList.contains('dragging')) { strip.classList.add('dragging'); strip.style.scrollSnapType = 'none'; }
+    if (strip.classList.contains('dragging')) {
+      strip.scrollLeft -= dx;
+      drag.v = .8 * (-dx / Math.max(1, now - drag.t)) + .2 * drag.v;
+    }
+    drag.x = e.clientX; drag.t = now;
+  });
+  addEventListener('pointerup', () => {
+    if (!drag) return;
+    const wasDrag = strip.classList.contains('dragging'); let v = drag.v * 16; drag = null;
+    if (!wasDrag) return;
+    strip.dataset.justDragged = '1'; setTimeout(() => delete strip.dataset.justDragged, 50);
+    const glide = () => { if (Math.abs(v) < .5) return release(); strip.scrollLeft += v; v *= .92; normalize(); raf = requestAnimationFrame(glide); };
+    glide();
+  });
+  /* после перетаскивания клик не должен открывать фото */
+  strip.addEventListener('click', e => { if (strip.dataset.justDragged) { e.stopPropagation(); e.preventDefault(); } }, true);
+
   $$('[data-scroll]').forEach(b => b.onclick = () => {
     normalize();
     const f = orig[0], w = f.getBoundingClientRect().width + parseFloat(getComputedStyle(strip).columnGap || 16);
