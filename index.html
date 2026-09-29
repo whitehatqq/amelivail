@@ -611,23 +611,46 @@ const audio = new Audio();
 audio.preload = 'none';
 let cur = 0, playing = false, fadeTimer = null, fadingOut = false;
 
-/* ---------- «Показать все треки» ---------- */
+/* ---------- «Показать все треки» ----------
+   Список плавно меняет высоту (≈0,5 с). При сворачивании страница подкручивается
+   так, чтобы кнопка оставалась на том же месте экрана — без рывков и прыжков. */
 const VISIBLE_TRACKS = 8;
-function expandTracks(open) {
+let listAnim = 0;
+function setMoreLabel(open) {
   const btn = $('#moreTracks');
-  $('#tracks').classList.toggle('collapsed', !open);
   btn.setAttribute('aria-expanded', open);
   btn.innerHTML = (open ? 'Свернуть список' : `Показать все треки (${tracks.length})`) +
     ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>';
 }
+function expandTracks(open, instant) {
+  const list = $('#tracks'), btn = $('#moreTracks');
+  const isOpen = !list.classList.contains('collapsed');
+  setMoreLabel(open);
+  if (open === isOpen && !listAnim) return;
+  cancelAnimationFrame(listAnim); listAnim = 0;
+  const from = list.getBoundingClientRect().height;
+  list.style.height = ''; list.classList.toggle('collapsed', !open);
+  const to = list.getBoundingClientRect().height;
+  if (instant || matchMedia('(prefers-reduced-motion: reduce)').matches || Math.abs(to - from) < 2) return;
+  if (!open) list.classList.remove('collapsed');           // пока сворачиваем — треки видны, их «съедает» край
+  list.style.overflow = 'hidden'; list.style.height = from + 'px';
+  const keepTop = !open ? btn.getBoundingClientRect().top : null;
+  const t0 = performance.now(), D = 480, ease = k => 1 - Math.pow(1 - k, 3);
+  const step = now => {
+    const k = Math.min(1, (now - t0) / D);
+    list.style.height = (from + (to - from) * ease(k)) + 'px';
+    if (keepTop !== null) { const d = btn.getBoundingClientRect().top - keepTop; if (d) scrollBy({ top: d, behavior: 'instant' }); }
+    if (k < 1) { listAnim = requestAnimationFrame(step); return; }
+    listAnim = 0; list.style.height = ''; list.style.overflow = '';
+    list.classList.toggle('collapsed', !open);
+    if (keepTop !== null) { const d = btn.getBoundingClientRect().top - keepTop; if (d) scrollBy({ top: d, behavior: 'instant' }); }
+  };
+  listAnim = requestAnimationFrame(step);
+}
 if (tracks.length > VISIBLE_TRACKS) {
   $('#moreTracks').hidden = false;
-  expandTracks(false);
-  $('#moreTracks').onclick = () => {
-    const open = $('#moreTracks').getAttribute('aria-expanded') !== 'true';
-    expandTracks(open);
-    if (!open) $('#music').scrollIntoView({ behavior: 'smooth' });
-  };
+  expandTracks(false, true);
+  $('#moreTracks').onclick = () => expandTracks($('#moreTracks').getAttribute('aria-expanded') !== 'true');
 } else $('#tracks').classList.remove('collapsed');
 
 function setTrack(i) {
