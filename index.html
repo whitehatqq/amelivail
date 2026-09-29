@@ -102,7 +102,20 @@
   .icon-btn svg { width: 18px; height: 18px; }
 
   /* ---------- ГЛАВНЫЙ ЭКРАН: журнальная обложка ---------- */
-  .h2 { background: var(--bg); color: var(--ink); padding: 110px 0 0; overflow: hidden; }
+  .h2 { background: var(--bg); color: var(--ink); padding: 110px 0 0; overflow: hidden; position: relative; isolation: isolate; }
+  /* пульсирующее красное свечение за фигурой, пока играет отрывок */
+  .h2::before, .h2::after { content: ''; position: absolute; left: 50%; bottom: -10%; z-index: -1; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 1.2s ease; transform: translateX(-50%); }
+  .h2::before { width: min(1100px, 130vw); aspect-ratio: 1; background: radial-gradient(circle, rgba(223,38,64,.55) 0%, rgba(223,38,64,.22) 35%, rgba(255,106,61,.08) 55%, transparent 70%); }
+  .h2::after { width: min(620px, 90vw); aspect-ratio: 1; bottom: 5%; background: radial-gradient(circle, rgba(255,70,90,.5) 0%, transparent 65%); filter: blur(10px); }
+  .h2.is-live::before { opacity: 1; animation: heroPulse 1.8s ease-in-out infinite; }
+  .h2.is-live::after { opacity: 1; animation: heroPulse 1.8s ease-in-out infinite .15s; }
+  @keyframes heroPulse {
+    0%, 100% { transform: translateX(-50%) scale(.92); filter: saturate(1); }
+    12%      { transform: translateX(-50%) scale(1.06); }
+    24%      { transform: translateX(-50%) scale(.97); }
+    36%      { transform: translateX(-50%) scale(1.03); }
+  }
+  @media (prefers-reduced-motion: reduce) { .h2.is-live::before, .h2.is-live::after { animation: none; } }
   .h2-top { display: flex; justify-content: space-between; gap: 1rem; font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 12px; }
   .h2-name { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 10.6vw; line-height: .85; letter-spacing: -.045em; text-align: center; white-space: nowrap; margin: 2.2rem 0 0; position: relative; z-index: 2; pointer-events: none; }
   .h2-stage { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: clamp(20px, 4vw, 56px); align-items: end; margin-top: -3.4vw; position: relative; z-index: 1; }
@@ -290,6 +303,8 @@
     .h2-side.r { justify-self: center; text-align: center; }
     .h2-side p { margin: 0 auto; }
     .h2-side.l { order: 2; }
+    .h2::before { bottom: auto; top: 18%; width: 150vw; }
+    .h2::after { bottom: auto; top: 30%; width: 110vw; }
     .h2-photo { width: min(360px, 88vw); -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%); mask-image: linear-gradient(180deg, #000 78%, transparent 100%); }
     .h2-side { padding-bottom: 0; }
     .h2-side.r { padding-bottom: 48px; }
@@ -665,6 +680,7 @@ function updateProgress(e) {
 }
 function setLoading(on) { $$(`#pPlay, #dPlay, [data-play="${cur}"]`).forEach(b => b.classList.toggle('is-loading', on)); }
 function syncUI() {
+  $('#hero').classList.toggle('is-live', playing);
   $('#player').classList.toggle('is-playing', playing);
   $('#pPlay').classList.toggle('is-playing', playing);
   $('#dPlay').classList.toggle('is-playing', playing);
@@ -708,7 +724,15 @@ if ('mediaSession' in navigator) {
 }
 ['#player', '#dock', '#tracks'].forEach(s => $(s).addEventListener('contextmenu', e => e.preventDefault()));
 setTrack(0);
-new IntersectionObserver(([e]) => $('#dock').classList.toggle('hidden-by-player', e.isIntersecting), { threshold: .35 }).observe($('#player'));
+/* мини-плеер прячется, пока на экране есть свои кнопки: большой плеер или кнопка отрывка на главном */
+{
+  const seen = new Set();
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target));
+    $('#dock').classList.toggle('hidden-by-player', seen.size > 0);
+  }, { threshold: .35 });
+  io.observe($('#player')); io.observe($('#hero .h2-play'));
+}
 
 /* ---------- иконки соцсетей для блока контактов ---------- */
 const ICONS = {
