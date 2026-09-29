@@ -97,7 +97,10 @@
   [data-play] .i-pause, .play-btn .i-pause { display: none; }
   .play-btn.is-playing .i-pause, [data-play].is-playing .i-pause { display: block; }
   .play-btn.is-playing .i-play, [data-play].is-playing .i-play { display: none; }
-  .is-loading::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--accent); animation: spin .8s linear infinite; }
+  /* загрузка: у круглых кнопок — тонкий кружок; у остального — только мягкое мерцание, без бегающих полос */
+  .play-btn.is-loading::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid transparent; border-top-color: var(--accent); animation: spin .8s linear infinite; }
+  .is-loading:not(.play-btn) { animation: loadBlink 1s ease-in-out infinite; }
+  @keyframes loadBlink { 50% { opacity: .7; } }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1.3rem; border-radius: 99px; font-weight: 700; font-size: .88rem; text-decoration: none; transition: transform .2s, filter .2s; }
@@ -157,7 +160,6 @@
   .h2-play { position: relative; display: inline-flex; align-items: center; gap: .6rem; padding: .9rem 1.4rem; border-radius: 99px; background: var(--ink); color: #fff; font-weight: 700; font-size: .9rem; transition: background .2s; }
   .h2-play svg { width: 16px; height: 16px; }
   .h2-play:hover, .h2-play.is-playing { background: var(--accent); }
-  .h2-play.is-loading::after { border-radius: 99px; }
   .h2-side .full { display: block; margin-top: .8rem; font-size: .82rem; color: var(--muted); text-decoration: none; }
   .h2-side .full:hover { color: var(--ink); }
 
@@ -753,7 +755,7 @@ function updateProgress(e) {
 let loadT = 0;
 function setLoading(on) {
   clearTimeout(loadT);
-  const els = () => $$(`#pPlay, #dPlay, [data-play="${cur}"]`);
+  const els = () => $$(`#pPlay, #dPlay, #pBadge, [data-play="${cur}"]`);
   if (on) loadT = setTimeout(() => els().forEach(b => b.classList.add('is-loading')), 200);
   else $$('.is-loading').forEach(b => b.classList.remove('is-loading'));
 }
