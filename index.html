@@ -51,6 +51,9 @@
     -webkit-font-smoothing: antialiased;
   }
   ::selection { background: var(--accent); color: #fff; }
+  /* элементы управления не выделяются и не мигают при быстрых нажатиях */
+  .nav, button, [data-play], .track, .dock, .player-info, .times, .wave, .h2-side .full, .p2-arrows {
+    -webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   /* лёгкое плёночное зерно */
   body::after {
     content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 999; opacity: .05; mix-blend-mode: multiply;
@@ -732,7 +735,16 @@ function updateProgress(e) {
   $('#dBar').style.width = p;
   $$(`[data-ti="${cur}"]`).forEach(el => el.style.setProperty('--p', p));
 }
-function setLoading(on) { $$(`#pPlay, #dPlay, [data-play="${cur}"]`).forEach(b => b.classList.toggle('is-loading', on)); }
+/* индикатор загрузки показываем только если загрузка дольше 0,2 с — иначе он лишь мелькает */
+let loadT = 0;
+function setLoading(on) {
+  clearTimeout(loadT);
+  const els = () => $$(`#pPlay, #dPlay, [data-play="${cur}"]`);
+  if (on) loadT = setTimeout(() => els().forEach(b => b.classList.add('is-loading')), 200);
+  else $$('.is-loading').forEach(b => b.classList.remove('is-loading'));
+}
+/* быстрые двойные/тройные клики по кнопкам не выделяют текст */
+document.addEventListener('mousedown', e => { if (e.detail > 1 && e.target.closest('button, [data-play], .wave, .p2-strip')) e.preventDefault(); });
 function syncUI() {
   { const h = $('#hero'), g = h.querySelector('.h2-glow'), was = h.classList.contains('is-live');
     h.classList.toggle('is-live', playing);
