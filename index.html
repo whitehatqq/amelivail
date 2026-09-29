@@ -784,19 +784,15 @@ function prev() { play((cur - 1 + tracks.length) % tracks.length); }
 /* настоящая длина отрывка: 30 сек или меньше, если файл короче */
 function clipLen() { const d = audio.duration - tracks[cur].start; return isFinite(d) && d > 0 && d < PREVIEW_SECONDS ? d : PREVIEW_SECONDS; }
 audio.addEventListener('loadedmetadata', () => { $('#tDur').textContent = fmt(clipLen()); updateProgress(elapsed()); });
-/* Прогресс: при заметном откате назад (остановка, смена трека, перемотка) заливка
-   не прыгает, а за 0,45 с плавно едет к новой позиции — даже если трек уже играет. */
-let shownP = 0, pTween = null;
+/* Прогресс: видимая позиция ползунка и заливки не прыгает, а плавно догоняет реальную
+   позицию звука (за доли секунды). Поэтому на паузе ползунок мягко останавливается,
+   при включении плавно трогается, при смене трека и перемотке плавно переезжает. */
+let shownP = 0, settleRaf = 0;
 function updateProgress(e) {
   const L = clipLen(), pn = Math.min(100, e / L * 100);
-  if (pn < shownP - 2 && !pTween) pTween = { from: shownP, t0: performance.now() };
-  let v = pn;
-  if (pTween) {
-    const k = Math.min(1, (performance.now() - pTween.t0) / 450);
-    v = pTween.from + (pn - pTween.from) * (1 - Math.pow(1 - k, 3));
-    if (k >= 1) pTween = null;
-    else if (!pTween.raf) pTween.raf = requestAnimationFrame(() => { if (pTween) pTween.raf = 0; updateProgress(elapsed()); });
-  }
+  const d = pn - shownP;
+  let v = Math.abs(d) < .03 ? pn : shownP + d * .2;
+  if (v !== pn && !settleRaf) settleRaf = requestAnimationFrame(() => { settleRaf = 0; updateProgress(elapsed()); });
   shownP = v;
   const p = v + '%';
   $('#wave').style.setProperty('--p', p);
