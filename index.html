@@ -246,17 +246,17 @@
   /* ---------- ФОТО: лента ---------- */
   #photos { background: var(--bg2); }
   .p2-arrows { display: flex; gap: 8px; }
-  .p2-strip { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter) 10px; scrollbar-width: none;
-    padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); scroll-padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); }
-  .p2-strip::-webkit-scrollbar { display: none; }
-  .p2-strip figure { flex: 0 0 clamp(230px, 27vw, 360px); scroll-snap-align: start; }
-  .p2-strip img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; cursor: zoom-in; transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  /* лента: окно (.p2-strip) + дорожка (.p2-track), которую JS двигает плавным сдвигом по кадрам */
+  .p2-strip { overflow: hidden; padding: 0 0 10px; touch-action: pan-y; user-select: none;
+    padding-left: max(var(--gutter), calc((100% - var(--wrap)) / 2 + var(--gutter))); }
+  .p2-track { display: flex; gap: 16px; will-change: transform; }
+  .p2-strip figure { flex: 0 0 clamp(230px, 27vw, 360px); }
+  .p2-strip img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; transition: transform .5s cubic-bezier(.2,.7,.2,1); -webkit-user-drag: none; user-select: none; pointer-events: none; }
+  .p2-strip figure { cursor: zoom-in; }
   .p2-strip figure:hover img { transform: scale(1.02); }
-  /* перетаскивание мышью: курсор-рука, во время протяжки без прилипания и выделения */
-  @media (hover: hover) and (pointer: fine) { .p2-strip, .p2-strip img { cursor: grab; } }
-  .p2-strip.dragging, .p2-strip.dragging img { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+  @media (hover: hover) and (pointer: fine) { .p2-strip figure { cursor: grab; } }
+  .p2-strip.dragging, .p2-strip.dragging figure { cursor: grabbing; }
   .p2-strip.dragging figure:hover img { transform: none; }
-  .p2-strip img { -webkit-user-drag: none; user-select: none; }
 
   /* ---------- КОНТАКТЫ: ссылки в профиле ---------- */
   .c3 { background: radial-gradient(50% 60% at 50% 30%, rgba(212,38,63,.14), transparent 70%), var(--bg); }
@@ -788,62 +788,78 @@ $('#c3copy').onclick = async () => {
 };
 
 /* ---------- фото: лента, стрелки ---------- */
-/* Бесконечная лента: набор фото повторён слева и справа. Когда прокрутка
-   уходит в копию, лента незаметно перескакивает на тот же кадр в середине —
-   поэтому листать можно сколько угодно в обе стороны (пальцем и стрелками). */
+/* Бесконечная лента без встроенной прокрутки браузера: позицию x считаем сами и
+   двигаем дорожку сдвигом (transform) на каждом кадре — поэтому всё плавно.
+   Набор фото повторён трижды, позиция берётся по кругу — край не наступает никогда.
+   Мышь/палец: протяжка 1:1, после отпускания инерция и мягкая остановка на фото.
+   Тачпад / Shift+колесо и стрелки ‹ › — тоже плавно. */
 {
   const strip = $('#p2'), orig = [...strip.children];
-  const clones = () => orig.map(f => { const c = f.cloneNode(true); c.setAttribute('aria-hidden', 'true'); return c; });
-  const x = el => el.getBoundingClientRect().left;
-  let step = 0;
-  const measure = () => { step = x(orig[0]) - x(strip.firstElementChild); };
-  const shift = d => { strip.style.scrollSnapType = 'none'; strip.style.scrollBehavior = 'auto'; strip.scrollLeft += d; void strip.offsetWidth; strip.style.scrollSnapType = ''; strip.style.scrollBehavior = ''; };
-  const normalize = () => { if (strip.scrollLeft < step * .5) shift(step); else if (strip.scrollLeft > step * 1.5) shift(-step); };
-  if (orig.length > 1) {
-    strip.prepend(...clones()); strip.append(...clones());
-    measure(); shift(step);
-    let t; strip.addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(normalize, 140); }, { passive: true });
-    addEventListener('resize', () => { const k = step ? strip.scrollLeft / step : 1; measure(); shift(k * step - strip.scrollLeft); });
-  }
-  /* Листание зажатой мышью (на телефоне работает родной свайп). Двигаем
-     прокрутку на разницу с прошлым шагом, поэтому незаметные «перескоки»
-     бесконечной ленты во время протяжки ничего не ломают. После отпускания —
-     инерция, затем лента мягко встаёт на ближайшее фото. */
-  let drag = null, raf = 0;
-  const release = () => { strip.classList.remove('dragging'); strip.style.scrollSnapType = ''; normalize(); };
-  strip.addEventListener('dragstart', e => e.preventDefault());
+  const track = document.createElement('div'); track.className = 'p2-track';
+  const clone = () => orig.map(f => { const c = f.cloneNode(true); c.setAttribute('aria-hidden', 'true'); return c; });
+  track.append(...clone(), ...orig, ...clone()); strip.append(track);
+
+  let W = 0, item = 0, x = 0, target = 0, raf = 0, drag = null, wheelT = 0;
+  const measure = () => {
+    W = orig[0].offsetLeft - track.firstElementChild.offsetLeft;   // ширина одного набора
+    item = orig[1] ? orig[1].offsetLeft - orig[0].offsetLeft : W;  // шаг одного фото
+  };
+  const mod = v => ((v % W) + W) % W;
+  const render = () => { track.style.transform = `translate3d(${-(W + mod(x))}px,0,0)`; };
+  const snap = v => Math.round(v / item) * item;
+  const tick = () => {
+    raf = 0;
+    if (drag) return;
+    const d = target - x;
+    if (Math.abs(d) < .3) { x = target; render(); return; }
+    x += d * .14; render(); raf = requestAnimationFrame(tick);
+  };
+  const go = t => { target = t; if (!raf) raf = requestAnimationFrame(tick); };
+
+  measure(); render();
+  addEventListener('resize', () => { const k = item ? Math.round(x / item) : 0; measure(); x = target = k * item; render(); });
+
+  /* протяжка мышью и пальцем */
   strip.addEventListener('pointerdown', e => {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    cancelAnimationFrame(raf);
-    drag = { x: e.clientX, moved: 0, v: 0, t: performance.now() };
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    cancelAnimationFrame(raf); raf = 0;
+    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: 0, v: 0, t: performance.now() };
   });
-  addEventListener('pointermove', e => {
-    if (!drag) return;
+  strip.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
     const dx = e.clientX - drag.x, now = performance.now();
     drag.moved += Math.abs(dx);
-    if (drag.moved > 6 && !strip.classList.contains('dragging')) { strip.classList.add('dragging'); strip.style.scrollSnapType = 'none'; }
-    if (strip.classList.contains('dragging')) {
-      strip.scrollLeft -= dx;
-      drag.v = .8 * (-dx / Math.max(1, now - drag.t)) + .2 * drag.v;
-    }
+    if (drag.moved > 6 && !strip.classList.contains('dragging')) { strip.classList.add('dragging'); strip.setPointerCapture(e.pointerId); }
+    x -= dx; render();
+    const dt = Math.max(1, now - drag.t);
+    drag.v = .75 * (-dx / dt) + .25 * drag.v;
     drag.x = e.clientX; drag.t = now;
   });
-  addEventListener('pointerup', () => {
-    if (!drag) return;
-    const wasDrag = strip.classList.contains('dragging'); let v = drag.v * 16; drag = null;
-    if (!wasDrag) return;
-    strip.dataset.justDragged = '1'; setTimeout(() => delete strip.dataset.justDragged, 50);
-    const glide = () => { if (Math.abs(v) < .5) return release(); strip.scrollLeft += v; v *= .92; normalize(); raf = requestAnimationFrame(glide); };
-    glide();
-  });
-  /* после перетаскивания клик не должен открывать фото */
+  const end = e => {
+    if (!drag || (e.pointerId !== undefined && e.pointerId !== drag.id)) return;
+    const wasDrag = strip.classList.contains('dragging'), v = performance.now() - drag.t > 80 ? 0 : drag.v;
+    drag = null; strip.classList.remove('dragging');
+    if (wasDrag) { strip.dataset.justDragged = '1'; setTimeout(() => delete strip.dataset.justDragged, 60); }
+    const throwTo = x + Math.max(-1.6, Math.min(1.6, v)) * 260;   // инерция: куда бы «докатилась» лента
+    go(snap(throwTo));
+  };
+  strip.addEventListener('pointerup', end);
+  strip.addEventListener('pointercancel', end);
+  strip.addEventListener('lostpointercapture', end);
+  /* после протяжки клик не открывает фото */
   strip.addEventListener('click', e => { if (strip.dataset.justDragged) { e.stopPropagation(); e.preventDefault(); } }, true);
 
-  $$('[data-scroll]').forEach(b => b.onclick = () => {
-    normalize();
-    const f = orig[0], w = f.getBoundingClientRect().width + parseFloat(getComputedStyle(strip).columnGap || 16);
-    strip.scrollBy({ left: +b.dataset.scroll * w, behavior: 'smooth' });
-  });
+  /* тачпад (горизонтальный свайп) и Shift + колесо */
+  strip.addEventListener('wheel', e => {
+    const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : (e.shiftKey ? e.deltaY : 0);
+    if (!d) return;
+    e.preventDefault(); cancelAnimationFrame(raf); raf = 0;
+    x += d; target = x; render();
+    clearTimeout(wheelT); wheelT = setTimeout(() => go(snap(x)), 140);
+  }, { passive: false });
+
+  /* стрелки: плавно на одно фото, частые нажатия складываются */
+  $$('[data-scroll]').forEach(b => b.onclick = () => go(snap(target) + +b.dataset.scroll * item));
 }
 
 /* ---------- nav / burger / lightbox ---------- */
