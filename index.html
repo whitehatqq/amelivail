@@ -112,8 +112,16 @@
   .h2-glow { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 1.8s cubic-bezier(.4,0,.2,1); }
   .h2.is-live .h2-glow { opacity: 1; transition-duration: 1.2s; }
   .h2-glow i { position: absolute; left: 50%; bottom: -10%; border-radius: 50%; transform: translateX(-50%); animation: heroPulse 1.8s ease-in-out infinite; }
-  .h2-glow i:first-child { width: min(1100px, 130vw); aspect-ratio: 1; background: radial-gradient(circle, rgba(223,38,64,.7) 0%, rgba(223,38,64,.3) 35%, rgba(255,106,61,.1) 55%, transparent 70%); }
-  .h2-glow i:last-child { width: min(620px, 90vw); aspect-ratio: 1; bottom: 5%; background: radial-gradient(circle, rgba(255,70,90,.5) 0%, transparent 65%); filter: blur(10px); animation-delay: .15s; }
+  /* светлый центр за фигурой (скрывает кайму выреза), красный — ореолом дальше, переход к фону растянут */
+  .h2-glow i:first-child { width: min(1250px, 140vw); aspect-ratio: 1; bottom: -18%; background: radial-gradient(circle, rgba(255,244,244,.9) 0%, rgba(255,222,226,.75) 12%, rgba(240,120,135,.38) 26%, rgba(223,38,64,.24) 38%, rgba(223,38,64,.1) 50%, rgba(255,106,61,.04) 60%, transparent 70%); }
+  .h2-glow i:nth-child(2) { width: min(560px, 80vw); aspect-ratio: 1; bottom: 12%; background: radial-gradient(circle, rgba(255,255,255,.85) 0%, rgba(255,255,255,.35) 38%, transparent 66%); filter: blur(14px); animation-delay: .15s; }
+  /* белые лучи — как свет прожектора: медленно вращаются, пульсируют со свечением, растворяются к краям */
+  .h2-glow i.rays { z-index: -1; width: min(1400px, 160vw); aspect-ratio: 1; bottom: -30%; border-radius: 0; background: none; }
+  .h2-glow i.rays::before { content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0) 0deg, rgba(255,255,255,.7) 1.2deg, rgba(255,255,255,0) 2.6deg, rgba(255,255,255,0) 12deg);
+    -webkit-mask-image: radial-gradient(circle, #000 6%, rgba(0,0,0,.6) 24%, rgba(0,0,0,.2) 42%, transparent 62%); mask-image: radial-gradient(circle, #000 6%, rgba(0,0,0,.6) 24%, rgba(0,0,0,.2) 42%, transparent 62%);
+    filter: blur(1.5px); animation: raysSpin 60s linear infinite; }
+  @keyframes raysSpin { to { transform: rotate(360deg); } }
   .h2:not(.is-live) .h2-glow:not(.fading) i { animation-play-state: paused; }
 
   @keyframes heroPulse {
@@ -331,8 +339,9 @@
     .h2-side.r { justify-self: center; text-align: center; }
     .h2-side p { margin: 0 auto; }
     .h2-side.l { order: 2; }
-    .h2-glow i:first-child { bottom: auto; top: 18%; width: 150vw; }
-    .h2-glow i:last-child { bottom: auto; top: 30%; width: 110vw; }
+    .h2-glow i:first-child { bottom: auto; top: 14%; width: 170vw; }
+    .h2-glow i:nth-child(2) { bottom: auto; top: 30%; width: 110vw; }
+    .h2-glow i.rays { bottom: auto; top: -10%; width: 200vw; }
     .h2-photo { width: min(360px, 88vw); -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%); mask-image: linear-gradient(180deg, #000 78%, transparent 100%); }
     .h2-side { padding-bottom: 0; }
     .h2-side.r { padding-bottom: 48px; }
@@ -374,7 +383,7 @@
 
 <!-- ================= ГЛАВНЫЙ ЭКРАН ================= -->
 <section class="h2" id="hero">
-  <div class="h2-glow" aria-hidden="true"><i></i><i></i></div>
+  <div class="h2-glow" aria-hidden="true"><i></i><i></i><i class="rays"></i></div>
   <div class="wrap">
     <div class="h2-top"><span>Инди-поп · Россия</span><span>Официальный сайт</span></div>
     <h1 class="h2-name">Ameli Vail</h1>
